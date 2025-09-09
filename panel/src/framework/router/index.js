@@ -14,7 +14,7 @@ class Router {
      * @param {Array<Object>} pages - List of all pages.
      * @param {string} pages.path Route to the document.
      * @param {string} pages.document Document content.
-     * @param {Object} options Exrta router settings.
+     * @param {Object} options Extra router settings.
      * @param {string} [options.fallback] Fallback page when router cannot find route.
      */
     constructor(pages, options = {fallback: "/404"}) {
