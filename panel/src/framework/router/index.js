@@ -7,7 +7,7 @@ import {
 
 
 /**
- * Manages wjat document page to render
+ * Manages what document page to render
  */
 class Router {
     /**
