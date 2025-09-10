@@ -25,6 +25,7 @@ class Router {
     }
 
     /**
+     * @private
      * Initialises the router.
      */
     init() {
@@ -125,7 +126,7 @@ class Router {
         history.pushState(null, null, nextPath);
         this.updateDocumentContent();
     }
-    
+
     /**
      * @private
      * Renders the next document to the browser.
