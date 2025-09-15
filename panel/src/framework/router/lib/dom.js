@@ -68,6 +68,10 @@ function partitionNodes(prevNodes, nextNodes) {
  * @param {Document} newDocument
  */
 function mergeHead(newDocument) {
+    /**
+     * @param {Document} doc
+     * @returns {Array<Document>}
+     */
     const getValidNodes = (doc) => {
         return Array.from(doc.querySelectorAll("head>:not([rel='prefetch'])"));
     };
