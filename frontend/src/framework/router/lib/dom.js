@@ -73,7 +73,7 @@ function mergeHead(newDocument) {
      * @returns {Array<Document>}
      */
     const getValidNodes = (doc) => {
-        return Array.from(doc.querySelectorAll("head>:not([rel='prefetch'])"));
+        return Array.from(doc.querySelectorAll("head>:not([rel='prefetch'])")).filter(n => !n.matches('link[rel~="stylesheet"], style'));
     };
     const prevNodes = getValidNodes(document);
     const newNodes = getValidNodes(newDocument);
