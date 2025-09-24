@@ -2,6 +2,7 @@ import '@/styles/global.css';
 import '@/styles/navigation.css';
 import '@/styles/typography.css';
 import '@/styles/heading.css';
+import '@/styles/button.css';
 
 
 import Router from "@/framework/router";
