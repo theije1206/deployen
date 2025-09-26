@@ -23,6 +23,13 @@
     height: 32px;
     word-break: break-word;
 }
+.reservation-block {
+    margin: 16px;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
 
 @media (max-width: 700px) {
     .reserveringen-tabel,

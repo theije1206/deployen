@@ -1,20 +1,18 @@
 [
   [
-    { "label": "Naam", "value": "Jan Jansen" },
-    { "label": "Telefoonnummer", "value": "0612345678" },
-    { "label": "E-mail", "value": "jan.jansen@email.com" },
-    { "label": "Datum", "value": "2025-10-12" },
-    { "label": "Tijd", "value": "18:30" },
-    { "label": "Aantal personen", "value": "4" },
-    { "label": "Opmerkingen", "value": "Vegetarisch menu" }
+    { "label": "Naam", "value": "Jan Janssen" },
+    { "label": "Aankomst", "value": "14-09-2025" },
+    { "label": "Vertrek", "value": "16-09-2025" },
+    { "label": "Plaats", "value": "Accomodatie - B - 3" },
+    { "label": "Status", "value": "Geaccepteerd" },
+    { "label": "Contact", "value": "0612345678" }
   ],
   [
     { "label": "Naam", "value": "Piet Pietersen" },
-    { "label": "Telefoonnummer", "value": "0687654321" },
-    { "label": "E-mail", "value": "piet@email.com" },
-    { "label": "Datum", "value": "2025-10-13" },
-    { "label": "Tijd", "value": "19:00" },
-    { "label": "Aantal personen", "value": "2" },
-    { "label": "Opmerkingen", "value": "Geen" }
+    { "label": "Aankomst", "value": "14-09-2025" },
+    { "label": "Vertrek", "value": "16-09-2025" },
+    { "label": "Plaats", "value": "Accomodatie - B - 3" },
+    { "label": "Status", "value": "In behandeling" },
+    { "label": "Contact", "value": "0698765432" }
   ]
 ]
