@@ -35,7 +35,8 @@
     margin-left: 10px;
     padding: 8px 16px;
     font-size: 14px;
-    background-color: #ccc;
+    border: #000 1px solid;
+    border-radius: 8px;
 }
 
 @media (max-width: 700px) {
@@ -73,6 +74,6 @@
     margin-left: 10px;
     padding: 8px 16px;
     font-size: 14px;
-    background-color: #ccc;
+    border-radius: 8px;
 }
 }

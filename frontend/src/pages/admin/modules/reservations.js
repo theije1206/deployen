@@ -19,10 +19,12 @@ function generateTableRows(rows) {
 // genereert alle reserveringsblokken als HTML string //
 function generateAllReservations(data) {
   return data
-  .map((reservation, i) => {
-    const { hoofd, details } = splitReservationData(reservation);
-    return `
-    <div class="reservation-block foldable-reservation" tabindex="0" data-original="${i + 1}">
+    .map((reservation, i) => {
+      const { hoofd, details } = splitReservationData(reservation);
+      return `
+    <div class="reservation-block foldable-reservation" tabindex="0" data-original="${
+      i + 1
+    }">
       <div class="reservation-summary">
         <div class="reservation-title heading-three">Reservering ${i + 1}</div>
         <table class="reserveringen-tabel reservation-summary-table">
@@ -43,8 +45,8 @@ function generateAllReservations(data) {
       </div>
     </div>
     `;
-  })
-  .join("");
+    })
+    .join("");
 }
 
 // combineert alles //
@@ -71,7 +73,9 @@ if (typeof window !== "undefined") {
         const expanded = btn.getAttribute("aria-expanded") === "true";
         btn.setAttribute("aria-expanded", !expanded);
         details.hidden = expanded;
-        btn.querySelector(".fold-toggle-icon").textContent = expanded ? "▼" : "▲";
+        btn.querySelector(".fold-toggle-icon").textContent = expanded
+          ? "▼"
+          : "▲";
       });
       block.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -90,15 +94,18 @@ if (typeof window !== "undefined") {
       const originalBlocks = Array.from(container.children);
       let sorted = false;
       sortButton.addEventListener("click", () => {
-
         if (!sorted) {
 
           // Sorteer op naam //
           const blocks = Array.from(container.children);
           blocks.sort((a, b) => {
-            const naamA = a.querySelector(".reservation-summary-table tr td").textContent.trim();
-            const naamB = b.querySelector(".reservation-summary-table tr td").textContent.trim();
-            return naamA.localeCompare(naamB, 'nl', { sensitivity: 'base' });
+            const naamA = a
+              .querySelector(".reservation-summary-table tr td")
+              .textContent.trim();
+            const naamB = b
+              .querySelector(".reservation-summary-table tr td")
+              .textContent.trim();
+            return naamA.localeCompare(naamB, "nl", { sensitivity: "base" });
           });
           blocks.forEach((block) => container.appendChild(block));
           blocks.forEach((block) => {
@@ -106,8 +113,9 @@ if (typeof window !== "undefined") {
             const orig = block.getAttribute("data-original");
             if (title && orig) title.textContent = `Reservering ${orig}`;
           });
+
+          sortButton.textContent = "Sorteer op reservering";
           sorted = true;
-          
         } else {
 
           // originele volgorde //
@@ -117,6 +125,7 @@ if (typeof window !== "undefined") {
             const orig = block.getAttribute("data-original");
             if (title && orig) title.textContent = `Reservering ${orig}`;
           });
+          sortButton.textContent = "Sorteer op naam";
           sorted = false;
         }
       });
