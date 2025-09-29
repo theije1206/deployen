@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Camping beheerder Dashboard</title>
+  <link rel="stylesheet" href="src/styles/dashboard.css">
+</head>
+
+<body>
+
+  <header class="top">
+    <button class="back">←</button>
+    <h1 class="title">Dashboard</h1>
+    <button class="date">Kies datum</button>
+  </header>
+
+  <div class="dashboard">
+    <div class="frame frame1" id="reservations">
+      <h2>Reserveringen
+      </h2>
+    </div>
+    <div class="frame frame2" id="availabillity">
+      <h2>Beschikbaar</h2>
+    </div>
+    <div class="frame frame3" id="messages">
+      <h2>Messages</h2>
+    </div>
+    <div class="frame frame4" id="catering">
+      <h2>Catering</h2>
+    </div>
+    <div class="frame frame5" id="invoice">
+      <h2>Factuur</h2>
+    </div>
+    <div class="frame frame6" id="turnover">
+      <h2>Omzet</h2>
+    </div>
+  </div>
+  <script>
+    // Dummy data
+const dashboardData = {
+    reservations: 18,
+    availability: ["12 plekken", "2 accommodaties"],
+    messages: "12 ongelezen berichten",
+    catering: ["Frikandelbroodjes : 2", "Stokbrood : 25"],
+    invoice: "Volgende factuurdatum xx/xx/xxxx \n €420",
+    turnover: "€420"
+  };
+  
+  //Reserveringen
+  {
+
+  }
+  
+  // Beschikbaarheid
+  {
+    const ul = document.createElement("ul");
+    dashboardData.availability.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      ul.appendChild(li);
+    });
+    document.getElementById("availabillity").appendChild(ul);
+  }
+  
+  //Berichten
+  {
+    const p = document.createElement("p");
+    p.textContent = dashboardData.messages;
+    document.getElementById("messages").appendChild(p);
+  }
+  
+  //Catering
+  {
+    const ul = document.createElement("ul");
+    dashboardData.catering.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      ul.appendChild(li);
+    });
+    document.getElementById("catering").appendChild(ul);
+  }
+  
+  //Factuur
+  {
+    const p = document.createElement("p");
+    p.textContent = dashboardData.invoice;
+    document.getElementById("invoice").appendChild(p);
+  }
+  
+  //Omzet
+  {
+    const p = document.createElement("p");
+    p.textContent = dashboardData.turnover;
+    document.getElementById("turnover").appendChild(p);
+  }
+  
+  </script>
+
+</body>
+
+</html>

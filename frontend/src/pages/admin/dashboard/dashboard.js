@@ -13,7 +13,7 @@ const dashboardData = {
 
   }
   
-  // BEschikbaarheid
+  // Beschikbaarheid
   {
     const ul = document.createElement("ul");
     dashboardData.availability.forEach(item => {
