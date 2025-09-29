@@ -26,7 +26,11 @@ function generateAllReservations(data) {
       i + 1
     }">
       <div class="reservation-summary">
-        <div class="reservation-title heading-three">Reservering ${i + 1}</div>
+        <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+        <div class="reservation-header">
+          <div class="reservation-title heading-three">Reservering ${i + 1}</div>
+          <a href="#" class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext">Edit</a>
+        </div>
         <table class="reserveringen-tabel reservation-summary-table">
           <tbody>
             ${generateTableRows(hoofd)}
@@ -43,11 +47,12 @@ function generateAllReservations(data) {
           </tbody>
         </table>
       </div>
-    </div>
-    `;
+    </div>`;
     })
     .join("");
 }
+
+
 
 // combineert alles //
 export const reservationsPage = [
