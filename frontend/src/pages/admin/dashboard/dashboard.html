@@ -10,31 +10,51 @@
 <body>
 
   <header class="top">
+    <a href="/admin">
     <button class="back">←</button>
+    </a>
     <h1 class="title">Dashboard</h1>
-    <button class="date">Kies datum</button>
+    <input type="date" class="date">
   </header>
 
   <div class="dashboard">
-    <div class="frame frame1" id="reservations">
-      <h2>Reserveringen
-      </h2>
-    </div>
-    <div class="frame frame2" id="availabillity">
-      <h2>Beschikbaar</h2>
-    </div>
-    <div class="frame frame3" id="messages">
-      <h2>Messages</h2>
-    </div>
-    <div class="frame frame4" id="catering">
-      <h2>Catering</h2>
-    </div>
-    <div class="frame frame5" id="invoice">
-      <h2>Factuur</h2>
-    </div>
-    <div class="frame frame6" id="turnover">
-      <h2>Omzet</h2>
-    </div>
+    <a class="frame frame1" href="/reserveringen">
+      <div id="reservations">
+        <h2>Reserveringen
+        </h2>
+      </div>
+    </a>
+
+    <a class="frame frame2" href="/beschikbaarheid">  
+      <div id="availabillity">
+        <h2>Beschikbaar</h2>
+      </div>
+    </a>
+
+    <a class="frame frame3" href="/berichten">
+      <div id="messages">
+        <h2>Messages</h2>
+      </div>
+    </a>
+    
+    <a class="frame frame4" href="/catering">
+      <div id="catering">
+        <h2>Catering</h2>
+      </div>
+    </a>
+
+    <a class="frame frame5" href="/factuur">
+      <div id="invoice">
+        <h2>Factuur</h2>
+      </div>
+    </a>
+    
+    <a class="frame frame6" href="/omzet">
+      <div id="turnover">
+        <h2>Omzet</h2>
+      </div>
+    </a>
+
   </div>
   <script>
     // Dummy data
