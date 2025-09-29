@@ -7,7 +7,6 @@ body {
     height: 100%;
   }
   
-
   .top {
     display: flex;
     align-items: center;
@@ -21,7 +20,7 @@ body {
     padding: 8px 12px;
     border: none;
     border-radius: 8px;
-    background: #ccc;
+    background: #ffffff;
     cursor: pointer;
     font-weight: bold;
   }
@@ -51,7 +50,7 @@ body {
     align-items: flex-start; 
     justify-content: flex-start; 
     padding: 16px; 
-    background: #ccc;
+    background: #ffffff;
     border-radius: 12px;
     font-weight: bold;
   }
@@ -60,9 +59,9 @@ body {
     text-align: left; 
   }
   
-  
   .frame1 {
     grid-column: span 2;
+    
   }
   
   .frame4 {
