@@ -4,7 +4,7 @@
     { "label": "Aankomst", "value": "14-09-2025" },
     { "label": "Vertrek", "value": "16-09-2025" },
     { "label": "Plaats", "value": "Accomodatie - B - 3" },
-    { "label": "Status", "value": "Geaccepteerd" },
+    { "label": "Status", "value": "Bevestigd" },
     { "label": "Contact", "value": "0612345678" }
   ],
   [
@@ -21,6 +21,14 @@
     { "label": "Vertrek", "value": "16-09-2025" },
     { "label": "Plaats", "value": "Accomodatie - B - 3" },
     { "label": "Status", "value": "In behandeling" },
+    { "label": "Contact", "value": "0698765432" }
+  ],
+  [
+    { "label": "Naam", "value": "BBBBB" },
+    { "label": "Aankomst", "value": "14-09-2025" },
+    { "label": "Vertrek", "value": "16-09-2025" },
+    { "label": "Plaats", "value": "Accomodatie - B - 3" },
+    { "label": "Status", "value": "Geannuleerd" },
     { "label": "Contact", "value": "0698765432" }
   ]
 ]
