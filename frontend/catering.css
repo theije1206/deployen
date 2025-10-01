@@ -15,6 +15,7 @@
     --color-white: #ffffff;
     --color-inactive: #a7a7a7;
     --color-secondary: #103c1f;
+    --color-secondary-hover: #15da8b;
     --color-primary: #8ed968;
     --color-red: #d96868;
     --bg-light: #fafafa;
@@ -23,6 +24,8 @@
     --outline-light: #e2e3e8;
     --outline-medium: #d8d9de;
     --outline-heavy: #d5d5d5;
+    --color-vakje: #9a9a9a;
+    --color-vakje2: #cdcdcd;
 }
 
 /* ==== RESET ==== */
@@ -80,9 +83,26 @@ body {
 }
 
 .mobile-paragraph {
-    font-size: 12px;
-    text-align: left;
+    font-size: 16px;
     color: var(--color-dark);
+    font-weight: bold;
+    padding: 8px 16px; /* ruimte binnen de cellen */
+}
+
+/* Dit is de afstand tussen de tabellen */
+.datum {
+    text-align: left;
+    width: 30%;
+}
+
+.items {
+    text-align: center;
+    width: 40%;
+}
+
+.aantal {
+    text-align: right;
+    width: 30%;
 }
 
 .mobile-paragraph2 {
@@ -123,6 +143,14 @@ body {
     border-radius: 12px;
     background-color: var(--color-secondary);
     color: var(--color-white);
+    cursor: pointer;
+    transition: all 0.3s ease; /* vloeiende overgang */
+}
+
+/* Hover-effect */
+.glass-button:hover {
+    box-shadow: 0 0 10px 3px rgba(203, 203, 203, 0.7); /* glow */
+    transform: translateY(-2px);                      /* lichte lift */
 }
 
 .glass-button1 {
@@ -155,7 +183,21 @@ body {
     background-color: var(--color-white);
     border: 2px solid var(--outline-light);
     border-radius: 24px;
-    width: 100%;
+    width: 420px;
+
+}
+/* Grid */
+.grid-container {
+  display: grid; /* maakt van dit element een grid container */
+  grid-template-columns: repeat(2, 1fr); /* 2 kolommen van gelijke breedte */
+  grid-gap: 10px; /* ruimte tussen de items */
+}
+
+.item {
+  background-color: rgb(126, 130, 131);
+  padding: 20px;
+  text-align: center;
+  font-size: 20px;
 }
 
 .row {
@@ -170,6 +212,25 @@ body {
     border-radius: 16px;
     background-color: var(--color-white);
 }
+
+.item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.item-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.item-price {
+  font-size: 16px;
+  color: #f5f5f5; /* lichte kleur zodat het zichtbaar blijft op je grijze achtergrond */
+}
+
 
 
 .icon-button {
@@ -186,7 +247,24 @@ body {
 .bestellingen-1 {
     background-color: var(--bg-light);
     padding: 5px 16px;
+    text-align: center; 
 }
+
+.item_toevoegen {
+    background-color: var(--bg-light);
+    padding: 5px 16px;
+    text-align: center; 
+}
+/* .item_vakje {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 25px 25px;
+    border-radius: 12px;
+    background-color: var(--color-vakje);
+    color: var(--color-white);
+} */
 
 @media (max-width: 1440px) {
     .bestellingen-1 {

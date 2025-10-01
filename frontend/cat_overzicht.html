@@ -13,19 +13,16 @@
     <header class="bestellingen-1">
         <h1 class="mobile-heading-03">Overzicht</h1>
     </header>
-    <header class="bestellingen-1">
-        <h2 class="mobile-heading-04">Maandag 22 Sep</h2>
-    </header>
 
-    <div class="bestellingen-1">
+
         <!-- Knoppen -->
         <div class="row">
             <button class="filled-button">+Item toevoegen</button>
         </div>
 
         <div class="container row" style="margin-top:16px; width: 420px;">
-            <button class="glass-button">Bestellingen</button>
-            <button class="glass-button special">Broodjes</button>
+            <button class="glass-button" id="bestellingenBtn">Bestellingen</button>
+            <button class="glass-button special" id="broodjesBtn">Broodjes</button>
         </div>
 
         <!-- Filters -->
@@ -35,38 +32,43 @@
             <button class="glass-button outline">Maand</button>
             <button class="glass-button outline">Jaar</button>
         </div>
-
+        
         <!-- Tabel -->
         <div class="container" style="margin-top:24px;">
             <table style="width:100%; border-collapse: collapse;">
                 <thead>
                     <tr class="row outlined">
-                        <th class="mobile-paragraph">Dag</th>
-                        <th class="mobile-paragraph">Bestelling</th>
-                        <th class="mobile-paragraph">Aantal</th>
+                        <th class="mobile-paragraph datum">Datum</th>
+                        <th class="mobile-paragraph items">Item</th>
+                        <th class="mobile-paragraph aantal">Aantal</th>
                     </tr>
                 </thead>
+                    <header class="bestellingen-1">
+                        <h2 class="mobile-heading-04">Maandag 22 Sep</h2>
+                    </header>
                 <tbody>
                     <tr class="row">
-                        <td>Ma 22 Sep</td>                        
-                        <td>#988334</td>
-                        <td>75x</td>
+                        <td class="mobile-paragraph datum">22/09/25</td>
+                        <td class="mobile-paragraph items">Croissant</td>
+                        <td class="mobile-paragraph aantal">25x</td>
                     </tr>
                     <tr class="row">
-                        <td>Di 23 Sep</td>                        
-                        <td>#655334</td>
-                        <td>225x</td>
+                        <td class="mobile-paragraph datum">22/09/25</td>
+                        <td class="mobile-paragraph items">Stokbrood</td>
+                        <td class="mobile-paragraph aantal">25x</td>
                     </tr>
                     <tr class="row">
-                        <td>Wo 24 Sep</td>
-                        <td>#344556</td>
-                        <td>75x</td>
+                        <td class="mobile-paragraph datum">22/09/25</td>
+                        <td class="mobile-paragraph items">Frikandelbroodje</td>
+                        <td class="mobile-paragraph aantal">25x</td>
                     </tr>
-                    
+
                 </tbody>
             </table>
         </div>
     </div>
+
+    <script src="catering.js"></script>
 
 </body>
 
