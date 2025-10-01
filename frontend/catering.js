@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     voegLinkToe('bestellingenBtn', 'catering.html');
     voegLinkToe('broodjesBtn', 'cat_broodjes.html');
 
-    // dagen apart)
+    // Dagen
     voegLinkToe('maandag', 'cat_overzicht.html');
     voegLinkToe('dinsdag', 'cat_overzicht.html');
     voegLinkToe('woensdag', 'cat_overzicht.html');
