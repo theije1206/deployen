@@ -1,3 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Camping beheerder Dashboard</title>
+  <link rel="stylesheet" href="src/styles/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+</head>
+
+<body>
+
+  <header class="top">
+    <button class="back" onclick="location.href='/admin'">←</button>
+    <h1 class="title">Dashboard</h1>
+    <input type="date" class="date">
+  </header>
+
+  <div class="dashboard">
+
+    <div class="frame frame1" id="reservationsFrame">
+      <h2>Reserveringen</h2>
+      <div class="chart-wrapper">
+        <canvas id="reservationChart"></canvas>
+      </div>
+    </div>
+    
+
+    <div class="frame frame2" onclick="location.href='/beschikbaarheid'">
+      <div id="availabillity">
+        <h2>Beschikbaar</h2>
+      </div>
+    </div>
+
+    <div class="frame frame3" onclick="location.href='/berichten'">
+      <div id="messages">
+        <h2>Messages</h2>
+      </div>
+    </div>
+
+    <div class="frame frame4" onclick="location.href='/catering'">
+      <div id="catering">
+        <h2>Catering</h2>
+      </div>
+    </div>
+
+    <div class="frame frame5" onclick="location.href='/factuur'">
+      <div id="invoice">
+        <h2>Factuur</h2>
+      </div>
+    </div>
+
+
+    <div class="frame frame6" onclick="location.href='/omzet'">
+      <div id="turnover">
+        <h2>Omzet</h2>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
 // Dummy data
 const dashboardData = {
   reservations: 18,
@@ -78,3 +140,10 @@ const p = document.createElement("p");
 p.textContent = dashboardData.turnover;
 document.getElementById("turnover").appendChild(p);
 }
+
+  
+  </script>
+  
+
+</body>
+</html>
