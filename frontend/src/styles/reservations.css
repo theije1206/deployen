@@ -1,0 +1,121 @@
+.reserveringen-tabel {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+.reserveringen-tabel th {
+    text-align: left;
+    background: #f7f7f7;
+    font-weight: 600;
+    width: 40%;
+    padding-left: 12px;
+}
+.reserveringen-tabel td {
+    text-align: right;
+    width: 60%;
+    padding-right: 12px;
+}
+.reserveringen-tabel th,
+.reserveringen-tabel td {
+    border: 1px solid #ccc;
+    padding: 7px 4px;
+    font-size: 13px;
+    height: 32px;
+    word-break: break-word;
+}
+.reservation-block {
+    margin: 16px;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+.sort-button, 
+.date-button {
+  padding: 4px 10px;   
+  font-size: 11px;     
+  border: 1px solid #000;
+  border-radius: 6px;
+  background-color: rgb(200, 200, 200);
+  cursor: pointer;
+}
+
+.date-button {
+  background: #fff;
+}
+
+.buttons-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;  
+}
+
+.date-picker {
+  padding: 3px 5px;
+  font-size: 11px;
+  height: 24px;   
+}
+
+
+@media (max-width: 700px) {
+    .reserveringen-tabel,
+    .reserveringen-tabel tbody,
+    .reserveringen-tabel tr {
+        display: block;
+        width: 100%;
+    }
+    .reserveringen-tabel th,
+    .reserveringen-tabel td {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 6px 4px;
+        font-size: 12px;
+        height: 26px;
+        border-bottom: none;
+    }
+    .reserveringen-tabel tr {
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+    .reserveringen-tabel th {
+        background: #f7f7f7;
+        font-weight: 600;
+        margin-bottom: 2px;
+    }
+    .reserveringen-tabel td {
+        background: #fff;
+        font-weight: 400;
+    }
+    .sort-button, 
+    .date-button {
+    padding: 4px 10px;   
+    font-size: 11px;     
+    border: 1px solid #000;
+    border-radius: 6px;
+    background-color: rgb(200, 200, 200);
+    cursor: pointer;
+    }
+
+    .date-button {
+    background: #fff;
+    }
+
+    .buttons-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;  
+    }
+
+    .date-picker {
+    padding: 3px 5px;
+    font-size: 11px;
+    height: 24px;   
+    }
+    .reservation-header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;       
+    text-decoration-line: underline;     
+    }
+}
