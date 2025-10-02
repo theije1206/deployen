@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bestellingen</title>
-    <link rel="stylesheet" href="Catering.css"> <!-- je CSS bestand -->
-</head>
+    <link rel="stylesheet" href="/src/styles/catering.css">
 
 <body>
 
-    <header class="bestellingen-1">
+    <header class="orders-1">
         <h1 class="mobile-heading-03">Bestellingen</h1>
     </header>
 
@@ -21,8 +20,8 @@
         </div>
 
         <div class="container row" style="margin-top:16px; width: 420px;">
-            <button class="glass-button" id="bestellingenBtn">Bestellingen</button>
-            <button class="glass-button special" id="broodjesBtn">Broodjes</button>
+            <button class="glass-button" id="ordersBtn">Bestellingen</button>
+            <button class="glass-button special" id="bakeryBtn">Broodjes</button>
         </div>
 
         <!-- Filters -->
@@ -38,28 +37,28 @@
             <table style="width:100%; border-collapse: collapse;">
                 <thead>
                     <tr class="row outlined">
-                        <th class="mobile-paragraph datum">Datum</th>
+                        <th class="mobile-paragraph date">Datum</th>
                         <th class="mobile-paragraph items">Bestelling</th>
-                        <th class="mobile-paragraph aantal">Aantal</th>
+                        <th class="mobile-paragraph amount">Aantal</th>
                     </tr>
                 </thead>
                 <tbody>
 
                     </tr>
                         <tr class="row">
-                        <td class="mobile-paragraph datum"><button id="maandag">Ma 22 Sep</button></td>
+                        <td class="mobile-paragraph date"><button id="monday">Ma 22 Sep</button></td>
                         <td class="mobile-paragraph items">#988334</td>
-                        <td class="mobile-paragraph aantal">75x</td>
+                        <td class="mobile-paragraph amount">75x</td>
                     </tr>
                     <tr class="row">
-                        <td class="mobile-paragraph datum"><button id="dinsdag">Di 25 Sep</button></td>
+                        <td class="mobile-paragraph date"><button id="tuesday">Di 25 Sep</button></td>
                         <td class="mobile-paragraph items">#655334</td>
-                        <td class="mobile-paragraph aantal">25x</td>
+                        <td class="mobile-paragraph amount">25x</td>
                     </tr>
                     <tr class="row">
-                        <td class="mobile-paragraph datum"><button id="woensdag">Wo 24 Sep</button></td>
+                        <td class="mobile-paragraph date"><button id="wednesday">Wo 24 Sep</button></td>
                         <td class="mobile-paragraph items">#344556</td>
-                        <td class="mobile-paragraph aantal">75x</td>
+                        <td class="mobile-paragraph amount">75x</td>
                     </tr>
 
                 </tbody>
@@ -67,7 +66,7 @@
         </div>
     </div>
 
-    <script src="catering.js"></script>
+    <script src="/src/catering.js"></script>
 
 </body>
 

@@ -86,10 +86,10 @@ body {
     font-size: 16px;
     color: var(--color-dark);
     font-weight: bold;
-    padding: 8px 16px; /* ruimte binnen de cellen */
+    padding: 8px 16px; /* space between cells */
 }
 
-/* Dit is de afstand tussen de tabellen */
+/* distance between tables */
 .datum {
     text-align: left;
     width: 30%;
@@ -140,6 +140,7 @@ body {
     align-items: center;
     gap: 8px;
     padding: 16px 32px;
+    width: 200px;
     border-radius: 12px;
     background-color: var(--color-secondary);
     color: var(--color-white);
@@ -171,11 +172,18 @@ body {
 }
 
 .glass-button.special {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 32px;
+    border-radius: 12px;
     background-color: var(--bg-medium);
-    border: 1px solid var(--outline-lighter);
     color: var(--color-dark);
-    width: 150px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
+
 
 /* ==== LAYOUTS ==== */
 .container {
@@ -185,6 +193,13 @@ body {
     border-radius: 24px;
     width: 420px;
 
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
 }
 /* Grid */
 .grid-container {
@@ -200,12 +215,7 @@ body {
   font-size: 20px;
 }
 
-.row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px;
-}
+
 
 .row.outlined {
     border: 2px solid var(--outline-heavy);
@@ -243,8 +253,8 @@ body {
     border: 2px solid var(--outline-lighter);
 }
 
-/* ==== BESTELLINGEN RESPONSIVE ==== */
-.bestellingen-1 {
+/* ==== ORDERS RESPONSIVE ==== */
+.orders-1 {
     background-color: var(--bg-light);
     padding: 5px 16px;
     text-align: center; 
@@ -255,16 +265,7 @@ body {
     padding: 5px 16px;
     text-align: center; 
 }
-/* .item_vakje {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    padding: 25px 25px;
-    border-radius: 12px;
-    background-color: var(--color-vakje);
-    color: var(--color-white);
-} */
+
 
 @media (max-width: 1440px) {
     .bestellingen-1 {
