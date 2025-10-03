@@ -3,6 +3,10 @@ import '@/styles/navigation.css';
 import '@/styles/typography.css';
 import '@/styles/heading.css';
 import '@/styles/button.css';
+import '@/styles/dashboard.css';
+
+// import '@/pages/admin/dashboard/dashboard.js'
+
 import '@/styles/notifications.css';
 import '@/styles/sanitair.css';
 import '@/styles/reservations.css';
@@ -11,6 +15,7 @@ import '@/styles/reservations.css';
 import Router from "@/framework/router";
 import HomePage from "@/pages/index.html?raw";
 import AdminHomePage from "@/pages/admin/home/index.html?raw";
+import dashboardPage from "/dashboard.html?raw";
 import sanitairPage from "@/pages/sanitair/index.html?raw";
 import hygienePage from'@/pages/sanitair/hygiene.html?raw';
 import defectPage from '@/pages/sanitair/defect.html?raw';
@@ -33,6 +38,8 @@ const ROUTES = [
         document: AdminHomePage
     },
     {
+        path: "/dashboard",
+        document: dashboardPage
 
         path: "/sanitair",
         document: sanitairPage
