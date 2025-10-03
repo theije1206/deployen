@@ -20,8 +20,8 @@
         </div>
 
         <div class="container row" style="margin-top:16px; width: 420px;">
-            <button class="glass-button" id="ordersBtn">Bestellingen</button>
-            <button class="glass-button special" id="bakeryBtn">Broodjes</button>
+            <a class="glass-button" id="ordersBtn" href="/catering">Bestellingen</a>
+            <a class="glass-button special" id="bakeryBtn" href="/catering/bakery">Broodjes</a>
         </div>
 
         <!-- Filters -->
@@ -46,7 +46,7 @@
 
                     </tr>
                         <tr class="row">
-                        <td class="mobile-paragraph date"><button id="monday">Ma 22 Sep</button></td>
+                        <td class="mobile-paragraph date"><a id="monday" href="/catering/orders">Ma 22 Sep</a></td>
                         <td class="mobile-paragraph items">#988334</td>
                         <td class="mobile-paragraph amount">75x</td>
                     </tr>
@@ -69,5 +69,31 @@
     <script src="/src/catering.js"></script>
 
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+// Function to add navigation links
+function addThisLink(id, link) {
+    const knop = document.getElementById(id);
+    if (knop) { // check if the button exists on this page
+        knop.addEventListener('click', () => {
+            window.location.href = link;
+        });
+    }
+}
+
+// Basic buttons
+addThisLink('ordersBtn', 'catering.html');
+addThisLink('bakeryBtn', 'cat_bakery.html');
+
+// days buttons
+addThisLink('monday', 'cat_orders.html');
+addThisLink('tuesday', 'cat_orders.html');
+addThisLink('wednesday', 'cat_orders.html');
+
+// ID and link
+});
+</script>
 
 </html>

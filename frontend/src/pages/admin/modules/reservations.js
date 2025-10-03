@@ -1,5 +1,5 @@
 import reservationsData from "./reservations-data.json";
-import { navigation } from "../navigation.js";
+// import { navigation } from "../navigation.js";
 
 // splitst reserveringsdata
 function splitReservationData(data) {
