@@ -1,4 +1,4 @@
-package team.verzinwat.cms;
+package team.verzinwat.cms.webservices;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;

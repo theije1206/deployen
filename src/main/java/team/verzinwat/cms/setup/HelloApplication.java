@@ -1,4 +1,4 @@
-package team.verzinwat.cms;
+package team.verzinwat.cms.setup;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;

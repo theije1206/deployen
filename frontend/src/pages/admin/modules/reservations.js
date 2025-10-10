@@ -206,6 +206,18 @@ if (typeof window !== "undefined") {
           sortMenu.classList.add("hidden");
           sortMenu.classList.remove("close");
         }, 200);
+
+        async function fetchReservations() {
+    try {
+        const response = await fetch('http://localhost:8080/api/reservations'); // pas URL aan naar je server
+        if (!response.ok) throw new Error('Network response was not ok');
+        const reservations = await response.json();
+        console.log(reservations);
+        return reservations;
+    } catch (error) {
+        console.error('Fetch error:', error);
+    }
+}
       });
     });
   });
