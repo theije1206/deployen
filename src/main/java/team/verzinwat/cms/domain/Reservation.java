@@ -8,14 +8,16 @@ public class Reservation {
     private String status;
     private String contact;
 
-    public Reservation(String naam, String aankomst, String vertrek, String plaats, String status, String contact) {
-        this.naam = naam;
-        this.aankomst = aankomst;
-        this.vertrek = vertrek;
-        this.plaats = plaats;
-        this.status = status;
-        this.contact = contact;
-    }
+//    public Reservation() {}
+
+//    public Reservation(String naam, String aankomst, String vertrek, String plaats, String status, String contact) {
+//        this.naam = naam;
+//        this.aankomst = aankomst;
+//        this.vertrek = vertrek;
+//        this.plaats = plaats;
+//        this.status = status;
+//        this.contact = contact;
+//    }
 
     public String getNaam() { return naam; }
     public void setNaam(String naam) { this.naam = naam; }
