@@ -1,4 +1,4 @@
-import reservationsData from "./reservations-data.json";
+import reservationsData from "../../../../../src/main/java/team/verzinwat/cms/services/reservations-data.json";
 
 // Splitst reserveringsdata
 function splitReservationData(data) {
@@ -209,7 +209,7 @@ if (typeof window !== "undefined") {
 
         async function fetchReservations() {
     try {
-        const response = await fetch('http://localhost:8080/api/reservations'); // pas URL aan naar je server
+        const response = await fetch('http://localhost:8080/cms_war_exploded/api/reservations');
         if (!response.ok) throw new Error('Network response was not ok');
         const reservations = await response.json();
         console.log(reservations);

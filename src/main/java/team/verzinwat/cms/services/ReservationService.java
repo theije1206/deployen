@@ -1,19 +1,11 @@
 package team.verzinwat.cms.services;
 
-import java.util.List;
-import java.util.ArrayList;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import team.verzinwat.cms.domain.Reservation;
 
-public class ReservationService {
-    private static final List<Reservation> reservations = new ArrayList<>();
+import java.io.InputStream;
+import java.util.Collections;
+import java.util.List;
 
-    static {
-        reservations.add(new Reservation(1, "Jan Jansen", "Bevestigd"));
-        reservations.add(new Reservation(2, "Kim de Vries", "In behandeling"));
-        reservations.add(new Reservation(3, "Piet Pietersen", "Geannuleerd"));
-    }
 
-    public List<Reservation> getAll() {
-        return reservations;
-    }
-}
