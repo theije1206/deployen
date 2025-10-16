@@ -100,12 +100,12 @@ export const reservationsPage = `
 </section>
 `;
 
-// ===== FRONTEND LOGICA =====
+// FRONTEND LOGICA 
 if (typeof window !== "undefined") {
   // Fetch data van backend
   async function fetchReservations() {
     try {
-      const response = await fetch("http://localhost:8080/api/reservations");
+      const response = await fetch("/api/reservations");
       if (!response.ok) throw new Error("Network response was not ok");
       const reservations = await response.json();
       console.log("Fetched reservations:", reservations);
@@ -138,7 +138,7 @@ if (typeof window !== "undefined") {
     container.innerHTML = generateAllReservations(reservations);
     activateFoldable();
 
-    // Zoek- en sorteerfunctionaliteit
+    // Zoek en sorteerfunctionaliteit
     const searchInput = document.getElementById("search-input");
     const searchToggle = document.getElementById("search-toggle");
     const sortMenu = document.getElementById("sort-menu");
@@ -223,6 +223,52 @@ if (typeof window !== "undefined") {
           sortMenu.classList.remove("close");
         }, 200);
       });
+    });
+
+    // Reservering toevoegen via de plusknop
+    const addButton = document.querySelector(".add-reservation button");
+
+    addButton.addEventListener("click", async () => {
+      const naam = prompt("Naam van de reservering:");
+      const aankomst = prompt("Aankomstdatum:");
+      const vertrek = prompt("Vertrekdatum:");
+      const plaats = prompt("Plaats of accommodatie:");
+      const contact = prompt("Contactnummer:");
+
+      if (!naam || !aankomst || !vertrek || !plaats || !contact) {
+        alert("Alle velden zijn verplicht!");
+        return;
+      }
+
+      const newReservation = {
+        naam,
+        aankomst,
+        vertrek,
+        plaats,
+        status,
+        contact,
+      };
+
+      try {
+        const response = await fetch("/api/reservations", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newReservation),
+        });
+
+        if (!response.ok) throw new Error("Reservering toevoegen mislukt");
+
+        const saved = await response.json();
+
+        const newBlock = generateAllReservations([saved]);
+        container.insertAdjacentHTML("beforeend", newBlock);
+
+        activateFoldable();
+        alert("Reservering succesvol toegevoegd!");
+      } catch (error) {
+        console.error("Fout bij toevoegen:", error);
+        alert("Er ging iets mis bij het toevoegen van de reservering.");
+      }
     });
   });
 }
