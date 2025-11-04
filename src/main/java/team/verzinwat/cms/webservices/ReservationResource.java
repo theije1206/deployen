@@ -24,14 +24,4 @@ public class ReservationResource {
         service.addReservation(reservation);
         return reservation;
     }
-
-    @PATCH
-    @Path("/{id}")
-    public Reservation updateReservation(@PathParam("id") int id, Reservation updatedFields) {
-        Reservation updated = service.updateReservation(id, updatedFields);
-        if (updated == null) {
-            throw new NotFoundException("Reservering met ID " + id + " niet gevonden.");
-        }
-        return updated;
-    }
 }

@@ -1,189 +1,274 @@
-// Template-cloning reservations module (restored)
-
-function createReservationElement(reservation, index) {
-  var tpl = document.getElementById('reservation-template');
-  if (!tpl) return document.createElement('div');
-  var node = tpl.content.firstElementChild.cloneNode(true);
-  var id = (reservation && (reservation.id || reservation._id)) || (index + 1);
-  node.setAttribute('data-original', id);
-
-  var setField = function(field, value) {
-    var el = node.querySelector('.field-' + field);
-    if (el) el.textContent = value || '';
-  };
-
-  setField('Naam', reservation && (reservation.naam || reservation.Naam));
-  setField('Aankomst', reservation && (reservation.aankomst || reservation.Aankomst));
-  setField('Vertrek', reservation && (reservation.vertrek || reservation.Vertrek));
-  setField('Plaats', reservation && (reservation.plaats || reservation.Plaats));
-  setField('Contact', reservation && (reservation.contact || reservation.Contact));
-  setField('Status', reservation && (reservation.status || reservation.Status));
-
-  var title = node.querySelector('.reservation-id');
-  if (title) title.textContent = id;
-
-  var details = node.querySelector('.reservation-details');
-  if (details) details.hidden = true;
-  node.setAttribute('aria-expanded', 'false');
-
-  return node;
+// Splitst reserveringsdata in hoofd- en detailgegevens
+function splitReservationData(data) {
+  const hoofdLabels = ["Naam"];
+  const hoofd = data.filter((item) => hoofdLabels.includes(item.label));
+  const details = data.filter((item) => !hoofdLabels.includes(item.label));
+  return { hoofd, details };
 }
 
-// Main setup
-export async function setupReservationsPage() {
-  var container = document.querySelector('.reservations-list');
-  var modal = document.getElementById('reservation-modal');
-  var form = document.getElementById('reservation-form');
-  var searchInput = document.getElementById('search-input');
-  var searchToggle = document.getElementById('search-toggle');
-  var sortToggle = document.getElementById('sort-toggle');
-  var sortMenu = document.getElementById('sort-menu');
+// Genereert HTML-rijen
+function generateTableRows(rows) {
+  return rows
+    .map((item) => `<tr><th>${item.label}</th><td>${item.value}</td></tr>`)
+    .join("");
+}
 
-  if (!container) return;
+// Zet backend-data om naar het juiste format voor de tabel
+function formatReservationData(reservation) {
+  return [
+    { label: "Naam", value: reservation.naam },
+    { label: "Aankomst", value: reservation.aankomst },
+    { label: "Vertrek", value: reservation.vertrek },
+    { label: "Plaats", value: reservation.plaats },
+    { label: "Status", value: reservation.status },
+    { label: "Contact", value: reservation.contact },
+  ];
+}
 
+// Genereert alle reserveringsblokken
+function generateAllReservations(data) {
+  return data
+    .map((reservation, i) => {
+      const formattedData = formatReservationData(reservation);
+      const { hoofd, details } = splitReservationData(formattedData);
+
+      return `
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <div class="reservation-block foldable-reservation" tabindex="0" data-original="${i + 1}">
+        <div class="reservation-summary">
+          <div class="reservation-header">
+            <button class="fold-toggle" aria-expanded="false" aria-label="Toon details">
+              <div class="reservation-title heading-three">Reservering ${i + 1}</div>
+            </button>
+            <button class="edit-button" title="Bewerk reservering">
+              <i class="fa-solid fa-gear"></i>
+            </button>
+          </div>
+          <table class="reserveringen-tabel reservation-summary-table">
+            <tbody>
+              ${generateTableRows(hoofd)}
+            </tbody>
+          </table>
+        </div>
+        <div class="reservation-details" hidden>
+          <table class="reserveringen-tabel reservation-details-table">
+            <tbody>
+              ${generateTableRows(details)}
+            </tbody>
+          </table>
+        </div>
+      </div>`;
+    })
+    .join("");
+}
+
+// Exporteer HTML-structuur van de pagina
+export const reservationsPage = `
+<section class="reserveringen">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <div class="page-header">
+    <h1 class="header">Reserveringen overzicht</h1>
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-left">
+      <div class="search-container">
+        <button id="search-toggle" class="icon-button" title="Zoeken">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <input type="text" id="search-input" placeholder="Zoek op naam..." class="search-input hidden">
+      </div>
+
+      <div class="dropdown">
+        <button id="sort-toggle" class="icon-button">Sorteer ▼</button>
+        <div id="sort-menu" class="dropdown-menu hidden">
+          <button data-sort="default">Op reservering</button>
+          <button data-sort="name">Op naam</button>
+          <button data-sort="status">Op status</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="add-reservation">
+      <button type="button" class="icon-button" title="Reservering toevoegen">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="reservations-list"></div>
+</section>
+`;
+
+// FRONTEND LOGICA 
+if (typeof window !== "undefined") {
+  // Fetch data van backend
   async function fetchReservations() {
     try {
-      var r = await fetch('/api/reservations');
-      return r.ok ? await r.json() : [];
-    } catch (e) {
-      console.error('fetch reservations failed', e);
+      const response = await fetch("/api/reservations");
+      if (!response.ok) throw new Error("Network response was not ok");
+      const reservations = await response.json();
+      console.log("Fetched reservations:", reservations);
+      return reservations;
+    } catch (error) {
+      console.error("Fetch error:", error);
       return [];
     }
   }
 
-  var reservations = await fetchReservations();
-  container.innerHTML = '';
-  reservations.forEach(function(r, i) { container.appendChild(createReservationElement(r, i)); });
-
-  var originalOrder = Array.prototype.slice.call(container.children);
-
-  // Delegated click handler
-  container.addEventListener('click', function(e) {
-    var editBtn = e.target.closest ? e.target.closest('.edit-button') : null;
-    if (editBtn) {
-      e.stopPropagation();
-      var block = editBtn.closest('.reservation-block');
-      if (!block || !form) return;
-      var getField = function(label) {
-        var rows = block.querySelectorAll('tr');
-        for (var i = 0; i < rows.length; i++) {
-          var th = rows[i].querySelector('th');
-          if (th && th.textContent.trim() === label) {
-            var td = rows[i].querySelector('td');
-            return td ? td.textContent.trim() : '';
-          }
-        }
-        return '';
-      };
-      form.dataset.editing = block.getAttribute('data-original') || '';
-      if (form.naam) form.naam.value = getField('Naam');
-      if (form.aankomst) form.aankomst.value = getField('Aankomst');
-      if (form.vertrek) form.vertrek.value = getField('Vertrek');
-      if (form.plaats) form.plaats.value = getField('Plaats');
-      if (form.contact) form.contact.value = getField('Contact');
-      if (modal) modal.classList.remove('hidden');
-      return;
-    }
-
-    var block = e.target.closest ? e.target.closest('.reservation-block') : null;
-    if (!block) return;
-    var details = block.querySelector('.reservation-details');
-    var expanded = block.getAttribute('aria-expanded') === 'true';
-    block.setAttribute('aria-expanded', String(!expanded));
-    if (details) details.hidden = expanded;
-  });
-
-  // Keyboard toggle
-  container.addEventListener('keydown', function(e) {
-    if (e.key !== 'Enter' && e.key !== ' ') return;
-    var block = e.target.closest ? e.target.closest('.reservation-block') : null;
-    if (!block) return;
-    if (e.target.closest && e.target.closest('.edit-button')) return;
-    e.preventDefault();
-    var details = block.querySelector('.reservation-details');
-    var expanded = block.getAttribute('aria-expanded') === 'true';
-    block.setAttribute('aria-expanded', String(!expanded));
-    if (details) details.hidden = expanded;
-  });
-
-  // Search
-  if (searchToggle && searchInput) {
-    searchToggle.addEventListener('click', function() {
-      searchInput.classList.toggle('hidden');
-      if (!searchInput.classList.contains('hidden')) searchInput.focus();
-    });
-    searchInput.addEventListener('input', function() {
-      var q = searchInput.value.trim().toLowerCase();
-      Array.prototype.forEach.call(container.children, function(b) {
-        var naam = (b.querySelector('.field-Naam') && b.querySelector('.field-Naam').textContent.trim().toLowerCase()) || '';
-        b.style.display = naam.indexOf(q) !== -1 ? '' : 'none';
+  // Inklapbare blokken activeren
+  function activateFoldable() {
+    document.querySelectorAll(".foldable-reservation").forEach((block) => {
+      const btn = block.querySelector(".fold-toggle");
+      const details = block.querySelector(".reservation-details");
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", !expanded);
+        details.hidden = expanded;
       });
     });
   }
 
-  // Sort
-  if (sortToggle && sortMenu) {
-    sortToggle.addEventListener('click', function() { sortMenu.classList.toggle('hidden'); });
-    Array.prototype.forEach.call(sortMenu.querySelectorAll('button'), function(btn) {
-      btn.addEventListener('click', function() {
-        var sortType = btn.dataset.sort;
-        var blocks = Array.prototype.slice.call(container.children);
-        Array.prototype.forEach.call(sortMenu.querySelectorAll('button'), function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        if (sortType === 'name') {
-          blocks.sort(function(a, b) {
-            var naamA = (a.querySelector('.field-Naam') && a.querySelector('.field-Naam').textContent.trim()) || '';
-            var naamB = (b.querySelector('.field-Naam') && b.querySelector('.field-Naam').textContent.trim()) || '';
-            return naamA.localeCompare(naamB, 'nl', { sensitivity: 'base' });
+  // Pagina logica
+  window.addEventListener("DOMContentLoaded", async () => {
+    const container = document.querySelector(".reservations-list");
+
+    // Data ophalen en tonen
+    const reservations = await fetchReservations();
+    container.innerHTML = generateAllReservations(reservations);
+    activateFoldable();
+
+    // Zoek en sorteerfunctionaliteit
+    const searchInput = document.getElementById("search-input");
+    const searchToggle = document.getElementById("search-toggle");
+    const sortMenu = document.getElementById("sort-menu");
+    const sortToggle = document.getElementById("sort-toggle");
+    const originalBlocks = Array.from(container.children);
+
+    // Zoekbalk toggle
+    searchToggle.addEventListener("click", () => {
+      searchInput.classList.toggle("hidden");
+      if (!searchInput.classList.contains("hidden")) searchInput.focus();
+    });
+
+    // Zoeken op naam
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.trim().toLowerCase();
+      Array.from(container.children).forEach((block) => {
+        const naamCell = block.querySelector(".reservation-summary-table tr td");
+        const naam = naamCell ? naamCell.textContent.trim().toLowerCase() : "";
+        block.style.display = naam.includes(query) ? "" : "none";
+      });
+    });
+
+    // Sorteer dropdown toggle
+    sortToggle.addEventListener("click", () => {
+      sortMenu.classList.toggle("hidden");
+    });
+
+    // Sorteer opties
+    sortMenu.querySelectorAll("button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const sortType = btn.dataset.sort;
+        let blocks = Array.from(container.children);
+
+        // Reset actieve knop
+        sortMenu.querySelectorAll("button").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        // Sorteer op naam
+        if (sortType === "name") {
+          blocks.sort((a, b) => {
+            const naamA = a.querySelector(".reservation-summary-table tr td")?.textContent?.trim() || "";
+            const naamB = b.querySelector(".reservation-summary-table tr td")?.textContent?.trim() || "";
+            return naamA.localeCompare(naamB, "nl", { sensitivity: "base" });
           });
-        } else if (sortType === 'status') {
-          var statusOrder = { 'In behandeling': 1, 'Bevestigd': 2, 'Geannuleerd': 3 };
-          var getStatus = function(block) { return (block.querySelector('.field-Status') && block.querySelector('.field-Status').textContent.trim()) || ''; };
-          blocks.sort(function(a, b) { return (statusOrder[getStatus(a)] || 99) - (statusOrder[getStatus(b)] || 99); });
-        } else {
-          blocks = Array.prototype.slice.call(originalOrder);
         }
-        blocks.forEach(function(b) { container.appendChild(b); });
-        sortMenu.classList.add('hidden');
-        if (sortToggle) sortToggle.textContent = sortType === 'default' ? 'Sorteer ▼' : (sortType === 'name' ? 'Sorteer: Naam' : 'Sorteer: Status');
+
+        // Sorteer op status
+        else if (sortType === "status") {
+          const statusOrder = {
+            "In behandeling": 1,
+            "Bevestigd": 2,
+            "Geannuleerd": 3,
+          };
+          function getStatus(block) {
+            const rows = block.querySelectorAll(".reservation-details-table tr");
+            for (const row of rows) {
+              if (row.querySelector("th")?.textContent.trim() === "Status") {
+                return row.querySelector("td")?.textContent.trim() || "";
+              }
+            }
+            return "";
+          }
+          blocks.sort((a, b) => {
+            const sa = statusOrder[getStatus(a)];
+            const sb = statusOrder[getStatus(b)];
+            return sa - sb;
+          });
+        }
+
+        // Standaardvolgorde herstellen
+        else {
+          blocks = originalBlocks;
+        }
+
+        // Update volgorde
+        blocks.forEach((b) => container.appendChild(b));
+
+        // Dropdown sluiten met animatie
+        sortMenu.classList.add("close");
+        setTimeout(() => {
+          sortMenu.classList.add("hidden");
+          sortMenu.classList.remove("close");
+        }, 200);
       });
     });
-  }
 
-  // Modal open/close
-  var openBtn = document.getElementById('open-form-btn');
-  var closeBtn = document.getElementById('close-modal');
-  if (openBtn) openBtn.addEventListener('click', function() { if (modal) modal.classList.remove('hidden'); });
-  if (closeBtn) closeBtn.addEventListener('click', function() { if (modal) modal.classList.add('hidden'); });
+    // Reservering toevoegen via de plusknop
+    const addButton = document.querySelector(".add-reservation button");
 
-  // Submit
-  if (form) form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    var data = Object.fromEntries(new FormData(form));
-    data.status = data.status || 'In behandeling';
-    var editing = form.dataset.editing;
-    var method = editing ? 'PUT' : 'POST';
-    var url = editing ? '/api/reservations/' + editing : '/api/reservations';
-    try {
-      var r = await fetch(url, { method: method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-      var saved = await r.json();
-      if (editing) {
-        var old = container.querySelector('[data-original="' + editing + '"]');
-        if (old) old.replaceWith(createReservationElement(saved, 0));
-        form.dataset.editing = '';
-      } else {
-        var el = createReservationElement(saved, container.children.length);
-        container.appendChild(el);
-        originalOrder.push(el);
+    addButton.addEventListener("click", async () => {
+      const naam = prompt("Naam van de reservering:");
+      const aankomst = prompt("Aankomstdatum:");
+      const vertrek = prompt("Vertrekdatum:");
+      const plaats = prompt("Plaats of accommodatie:");
+      const contact = prompt("Contactnummer:");
+
+      if (!naam || !aankomst || !vertrek || !plaats || !contact) {
+        alert("Alle velden zijn verplicht!");
+        return;
       }
-      if (modal) modal.classList.add('hidden');
-      form.reset();
-    } catch (err) {
-      console.error('save failed', err);
-    }
-  });
-}
 
-if (typeof window !== 'undefined') {
-  setupReservationsPage().catch(function(err) { console.error('Failed to initialize reservations page', err); });
+      const newReservation = {
+        naam,
+        aankomst,
+        vertrek,
+        plaats,
+        status,
+        contact,
+      };
+
+      try {
+        const response = await fetch("/api/reservations", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newReservation),
+        });
+
+        if (!response.ok) throw new Error("Reservering toevoegen mislukt");
+
+        const saved = await response.json();
+
+        const newBlock = generateAllReservations([saved]);
+        container.insertAdjacentHTML("beforeend", newBlock);
+
+        activateFoldable();
+        alert("Reservering succesvol toegevoegd!");
+      } catch (error) {
+        console.error("Fout bij toevoegen:", error);
+        alert("Er ging iets mis bij het toevoegen van de reservering.");
+      }
+    });
+  });
 }
