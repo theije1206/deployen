@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reserveringen</title>
+  </head>
+  <body>
+    <section class="reserveringen">
+      <div class="page-header"><h1>Reserveringen overzicht</h1></div>
+
+      <div class="filter-bar">
+        <div class="filter-left">
+          <div class="search-container">
+            <button id="search-toggle" class="icon-button" title="Zoeken">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Zoek op naam..."
+              class="search-input hidden"
+            />
+          </div>
+
+          <div class="dropdown">
+            <button id="sort-toggle" class="icon-button">Sorteer ▼</button>
+            <div id="sort-menu" class="dropdown-menu hidden">
+              <button data-sort="default">Op reservering</button>
+              <button data-sort="name">Op naam</button>
+              <button data-sort="status">Op status</button>
+            </div>
+          </div>
+        </div>
+
+        <button id="open-form-btn" class="icon-button add-reservation">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
+
+      <div class="reservations-list"></div>
+    </section>
+
+    <template id="reservation-template">
+      <div
+        class="reservation-block foldable-reservation"
+        tabindex="0"
+        data-original=""
+      >
+        <div class="reservation-summary">
+          <div class="reservation-summary-top">
+            <div class="reservation-title heading-three">
+              Reservering <span class="reservation-id"></span>
+            </div>
+            <div class="reservation-actions">
+              <button
+                class="edit-button"
+                title="Bewerk"
+                aria-label="Bewerk reservering"
+              >
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+              </button>
+            </div>
+          </div>
+          <table class="reserveringen-tabel reservation-summary-table">
+            <tbody>
+              <tr>
+                <th>Naam</th>
+                <td class="field-Naam"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="reservation-details" hidden>
+          <table class="reserveringen-tabel reservation-details-table">
+            <tbody>
+              <tr>
+                <th>Aankomst</th>
+                <td class="field-Aankomst"></td>
+              </tr>
+              <tr>
+                <th>Vertrek</th>
+                <td class="field-Vertrek"></td>
+              </tr>
+              <tr>
+                <th>Plaats</th>
+                <td class="field-Plaats"></td>
+              </tr>
+              <tr>
+                <th>Contact</th>
+                <td class="field-Contact"></td>
+              </tr>
+              <tr>
+                <th>Status</th>
+                <td class="field-Status"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </template>
+
+    <div
+      id="reservation-formulier"
+      class="formulier hidden"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="formulier-content">
+        <h2>Nieuwe reservering</h2>
+        <form id="reservation-form">
+          <input name="naam" placeholder="Naam" required />
+          <input name="aankomst" type="date" required />
+          <input name="vertrek" type="date" required />
+          <input name="plaats" placeholder="Plaats" required />
+          <input name="contact" placeholder="Contact" required />
+
+          <button type="submit">Opslaan</button>
+          <button type="button" id="close-formulier">Annuleren</button>
+          <button type="button" id="delete-reservation" class="delete-reservation">Verwijderen</button>
+        </form>
+      </div>
+    </div>
+    <script
+      type="module"
+      src="/src/pages/admin/modules/reservations.js"
+    ></script>
+  </body>
+</html>

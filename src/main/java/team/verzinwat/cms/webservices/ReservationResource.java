@@ -24,4 +24,19 @@ public class ReservationResource {
         service.addReservation(reservation);
         return reservation;
     }
+
+    @PUT
+    @Path("/{id}")
+    public Reservation updateReservation(@PathParam("id") int id, Reservation updated) {
+        return service.updateReservation(id, updated);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void deleteReservation(@PathParam("id") int id) {
+        boolean removed = service.deleteReservation(id);
+        if (!removed) {
+            throw new WebApplicationException("Reservering niet gevonden", 404);
+        }
+    }
 }

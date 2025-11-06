@@ -1,6 +1,7 @@
 package team.verzinwat.cms.domain;
 
 public class Reservation {
+    private int id;
     private String naam;
     private String aankomst;
     private String vertrek;
@@ -10,7 +11,8 @@ public class Reservation {
 
     public Reservation() {}
 
-    public Reservation(String naam, String aankomst, String vertrek, String plaats, String status, String contact) {
+    public Reservation(int id, String naam, String aankomst, String vertrek, String plaats, String status, String contact) {
+        this.id = id;
         this.naam = naam;
         this.aankomst = aankomst;
         this.vertrek = vertrek;
@@ -19,6 +21,12 @@ public class Reservation {
         this.contact = contact;
     }
 
+    public Reservation(String naam, String aankomst, String vertrek, String plaats, String status, String contact) {
+        this(0, naam, aankomst, vertrek, plaats, status, contact);
+    }
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
     public String getNaam() { return naam; }
     public void setNaam(String naam) { this.naam = naam; }
     public String getAankomst() { return aankomst; }
