@@ -65,7 +65,7 @@ async function setupReservationsPage() {
   function showFormulier(title) {
     if (!formulier) return;
     const heading = formulier.querySelector(".formulier-content h2");
-    if (heading) heading.textContent = title || "Nieuwe reservering";
+    if (heading) heading.textContent = title || "Nieuwe boeking";
     formulier.classList.remove("hidden");
     document.body.style.overflow = "hidden";
   }
@@ -100,7 +100,7 @@ async function setupReservationsPage() {
       if (form.contact) form.contact.value = getField("Contact");
 
       if (deleteBtn) deleteBtn.style.display = "inline-block";
-      showFormulier("Reservering wijzigen");
+      showFormulier("Boeking wijzigen");
       return;
     }
 
@@ -187,7 +187,7 @@ async function setupReservationsPage() {
     openBtn.addEventListener("click", () => {
       if (deleteBtn) deleteBtn.style.display = "none";
       if (form) form.dataset.editing = "";
-      showFormulier("Nieuwe reservering");
+      showFormulier("Nieuwe boeking");
     });
 
   // Sluit formulier via knop
@@ -203,8 +203,8 @@ async function setupReservationsPage() {
       const editing = form.dataset.editing;
       const method = editing ? "PUT" : "POST";
       const url = editing
-        ? `/api/reservations/${editing}`
-        : "/api/reservations";
+        ? `/api/bookings/${editing}`
+        : "/api/bookings";
 
       try {
         const r = await fetch(url, {
@@ -246,15 +246,15 @@ async function setupReservationsPage() {
     deleteBtn.addEventListener("click", async () => {
       const editing = form.dataset.editing;
       if (!editing) {
-        alert("Geen reservering geselecteerd om te verwijderen.");
+        alert("Geen boeking geselecteerd om te verwijderen.");
         return;
       }
 
-      if (!confirm("Weet je zeker dat je deze reservering wilt verwijderen?"))
+      if (!confirm("Weet je zeker dat je deze boeking wilt verwijderen?"))
         return;
 
       try {
-        const response = await fetch(`/api/reservations/${editing}`, {
+        const response = await fetch(`/api/bookings/${editing}`, {
           method: "DELETE",
         });
         if (response.ok) {
