@@ -1,5 +1,6 @@
 package team.verzinwat.cms.webservices;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import team.verzinwat.cms.domain.Reservation;
@@ -8,6 +9,7 @@ import team.verzinwat.cms.services.ReservationService;
 import java.util.List;
 
 @Path("/reservations")
+@RolesAllowed("campingowner")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ReservationResource {
