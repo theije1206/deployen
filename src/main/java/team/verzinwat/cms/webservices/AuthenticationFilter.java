@@ -13,46 +13,38 @@ import jakarta.ws.rs.ext.Provider;
 import team.verzinwat.cms.services.UserService;
 import team.verzinwat.cms.setup.MySecurityContext;
 
-
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
+
     @Override
     public void filter(ContainerRequestContext requestCtx) {
 
-        boolean isSecure = requestCtx.getSecurityContext().isSecure();
-        String scheme = requestCtx
-                .getUriInfo()
-                .getRequestUri()
-                .getScheme();
+        String scheme = requestCtx.getUriInfo().getRequestUri().getScheme();
 
-        // Users are treated as guests, unless a valid JWT is provided, therefor we prepare a securitycontext with no user present
         MySecurityContext msc = new MySecurityContext(null, scheme);
-        // We will need to check the authorization header
-        String authHeader = requestCtx
-                .getHeaderString(HttpHeaders.AUTHORIZATION);
 
-        if (authHeader != null &&
-                authHeader.startsWith("Bearer ")) {
-            // If this is the case, retrieve the JWT
-            String token = authHeader
-                    .substring("Bearer".length())
-                    .trim();  // Without the space
+        String authHeader = requestCtx.getHeaderString(HttpHeaders.AUTHORIZATION);
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring("Bearer".length()).trim();
 
             try {
-                // Validate the token
                 JwtParser parser = Jwts.parser()
-                        .verifyWith(AuthenticationResource.key).build(); // Use the same key as when creating the JWT
-                Claims claims = parser
-                        .parseSignedClaims(token).getPayload(); //Retrieve the claims
+                        .verifyWith(AuthenticationResource.key).build();
 
-                String user = claims.getSubject();
-                msc = new MySecurityContext(
-                        UserService.getUserByName(user), scheme);
+                Claims claims = parser.parseSignedClaims(token).getPayload();
+                String username = claims.getSubject();
 
-                System.out.printf("Valid JWT, processing as %s!%n", user); // Let us see who logs in
+                var user = UserService.getUserByName(username);
+                if (user != null) {
+                    msc = new MySecurityContext(user, scheme);
+                    System.out.printf("Valid JWT, processing as %s%n", username);
+                } else {
+                    System.out.println("JWT user not found, treating as unauthorized");
+                }
+
             } catch (JwtException | IllegalArgumentException e) {
-                System.out.println("Invalid JWT, processing as guest!");
+                System.out.println("Invalid JWT, treating as unauthorized");
             }
         }
 

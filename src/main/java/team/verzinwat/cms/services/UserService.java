@@ -1,7 +1,6 @@
 package team.verzinwat.cms.services;
 
 import team.verzinwat.cms.domain.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,7 @@ public class UserService {
 
     static {
         users.add(new User("piet", "campingowner"));
-        users.add(new User("piet paniek"));
+        users.add(new User("visitor"));
     }
 
     public static String validateLogin(String username, String password) {

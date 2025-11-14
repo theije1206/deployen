@@ -6,5 +6,4 @@ public record LogonRequest(String username, String password) {
             throw new IllegalArgumentException("username and password cannot be null");
         }
     }
-
 }

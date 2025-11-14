@@ -13,21 +13,17 @@ public class User implements Principal {
         this.password = "12345";
     }
 
-    public User(String username){
-        if(username==null || username.isBlank()){
-            throw new IllegalArgumentException("username cannot be null or empty");
-        }
-        this.username = username;
-        this.role = "visitor";
-        this.password = "12345";
+    public User(String username) {
+        this(username, "visitor");
     }
+
     @Override
     public String getName() {
-        return this.username;
+        return username;
     }
 
     public String getRole() {
-        return this.role;
+        return role;
     }
 
     public boolean hasPassword(String password) {
