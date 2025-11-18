@@ -6,7 +6,7 @@ import '@/styles/button.css';
 import '@/styles/dashboard.css';
 import '@/styles/notifications.css';
 import '@/styles/sanitair.css';
-import '@/styles/reservations.css';
+import '@/styles/bookings.css';
 import '@/styles/catering.css'
 
 
@@ -20,7 +20,7 @@ import defectPage from '@/pages/sanitair/defect.html?raw';
 import allNotificationsPage from '@/pages/sanitair/all-notifications.html?raw';
 import storagePage from '@/pages/sanitair/storage.html?raw';
 import elsePage from '@/pages/sanitair/else.html?raw';
-import reservationsPage from '@/pages/admin/modules/reservations.html?raw';
+import reservationsPage from '@/pages/admin/modules/bookings.html?raw';
 import cateringPage from "@/pages/catering.html?raw"
 import cateringOrder from "@/pages/cat_orders.html?raw"
 import cateringBakery from "@/pages/cat_bakery.html?raw"
