@@ -12,7 +12,7 @@ public class UserService {
 
     static {
         List<User> temp = new ArrayList<>();
-        temp.add(new User("piet", "campingowner", "campingowner"));
+        temp.add(new User("piet", "12345", "campingowner"));
         temp.add(new User("visitor"));
         users = Collections.unmodifiableList(temp);
     }

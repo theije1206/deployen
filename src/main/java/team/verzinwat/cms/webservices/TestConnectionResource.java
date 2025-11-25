@@ -17,7 +17,7 @@ public class TestConnectionResource {
         try {
             var connection = ReservationConnection.getConnection();
 
-            PreparedStatement pst = connection.prepareStatement("SELECT *");
+            PreparedStatement pst = connection.prepareStatement("SELECT * FROM reservation");
             pst.executeQuery();
 
             return "DB OK";

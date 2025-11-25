@@ -1,66 +1,84 @@
 package team.verzinwat.cms.services;
 
+import team.verzinwat.cms.data.ReservationDAO;
+import team.verzinwat.cms.data.ReservationDaoPostgres;
 import team.verzinwat.cms.domain.Reservation;
 
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ReservationService {
 
-    private final List<Reservation> reservations = new ArrayList<>();
-    private int nextId = 1;
+    private final ReservationDAO dao;
 
-    /** Dummy data */
-    public ReservationService() {
-        addReservation("Jan Janssen","14-09-2025","16-09-2025","Accommodatie - B - 3","Bevestigd","0612345678");
-        addReservation("Piet Pietersen","20-09-2025","23-09-2025","Accommodatie - A - 1","In behandeling","0687654321");
-        addReservation("Kees van der Spek","10-10-2025","12-10-2025","Accommodatie - C - 2","Geannuleerd","0644455566");
+    public ReservationService(Connection connection) throws SQLException {
+        this.dao = new ReservationDaoPostgres(connection);
     }
 
-    /** Geeft een onveranderlijke lijst terug van alle reserverigen */
+    /** Haal alle reserveringen uit de database */
     public List<Reservation> getAllReservations() {
-        return reservations;
+        try {
+            return dao.findAll();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching reservations from DB", e);
+        }
     }
 
-    /** Voegt een nieuwe reservation toe */
-    public Reservation addReservation(String naam, String aankomst, String vertrek, String plaats, String status, String contact) {
-        Reservation reservation = new Reservation(nextId++, naam, aankomst, vertrek, plaats, status, contact);
-        reservations.add(reservation);
-        return reservation;
+    /** Voeg een reservering toe in de database */
+    public Reservation addReservation(
+            String naam,
+            String aankomst,
+            String vertrek,
+            String plaats,
+            String status,
+            String contact) {
+
+        try {
+            Reservation r = new Reservation(
+                    0, naam, aankomst, vertrek, plaats, status, contact
+            );
+
+            boolean ok = dao.save(r);
+            if (!ok) throw new RuntimeException("Failed to save reservation");
+
+            return r;
+        } catch (SQLException e) {
+            throw new RuntimeException("Database error while saving reservation", e);
+        }
     }
 
-    /** Update een bestaande reservering door een nieuw object aan te maken en het oude te vervangen */
-    public Reservation updateReservation(int id, String naam, String aankomst, String vertrek, String plaats, String status, String contact) {
-        Reservation existing = getReservationById(id);
-        if (existing == null) return null;
+    /** Update een reservering in de database */
+    public Reservation updateReservation(
+            int id,
+            String naam,
+            String aankomst,
+            String vertrek,
+            String plaats,
+            String status,
+            String contact) {
 
-        /** Maak nieuw object met bestaande of nieuwe waarden */
-        Reservation updated = new Reservation(
-                existing.getId(),
-                naam != null ? naam : existing.getNaam(),
-                aankomst != null ? aankomst : existing.getAankomst(),
-                vertrek != null ? vertrek : existing.getVertrek(),
-                plaats != null ? plaats : existing.getPlaats(),
-                status != null ? status : existing.getStatus(),
-                contact != null ? contact : existing.getContact()
-        );
+        try {
+            Reservation r = new Reservation(
+                    id, naam, aankomst, vertrek, plaats, status, contact
+            );
 
-        /** Vervang het oude object */
-        reservations.remove(existing);
-        reservations.add(updated);
-        return updated;
+            boolean ok = dao.update(r);
+            if (!ok) throw new RuntimeException("Failed to update reservation");
+
+            return r;
+        } catch (SQLException e) {
+            throw new RuntimeException("Database error while updating reservation", e);
+        }
     }
 
-    /** Verwijdert een reservation op basis van ID */
+    /** Verwijder een reservering in de database */
     public boolean deleteReservation(int id) {
-        return reservations.removeIf(r -> r.getId() == id);
-    }
-
-    /** Haalt een reservation op basis van ID */
-    public Reservation getReservationById(int id) {
-        return reservations.stream()
-                .filter(r -> r.getId() == id)
-                .findFirst()
-                .orElse(null);
+        try {
+            Reservation dummy = new Reservation(id, null, null, null, null, null, null);
+            return dao.delete(dummy);
+        } catch (SQLException e) {
+            throw new RuntimeException("Database error while deleting reservation", e);
+        }
     }
 }

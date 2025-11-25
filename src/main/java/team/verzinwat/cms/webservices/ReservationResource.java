@@ -4,9 +4,13 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import team.verzinwat.cms.domain.Reservation;
 import team.verzinwat.cms.services.ReservationService;
+import team.verzinwat.cms.data.ReservationConnection;
+
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 @Path("/reservations")
@@ -14,7 +18,17 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ReservationResource {
 
-    private static final ReservationService service = new ReservationService();
+    private static ReservationService service;
+
+    static {
+        try {
+            Connection conn = ReservationConnection.getConnection();
+            service = new ReservationService(conn);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Cannot connect to database", e);
+        }
+    }
 
     @GET
     public List<Reservation> getAll(@Context SecurityContext sc) {
