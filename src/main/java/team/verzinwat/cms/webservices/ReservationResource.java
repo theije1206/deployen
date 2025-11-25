@@ -1,6 +1,5 @@
 package team.verzinwat.cms.webservices;
 
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import team.verzinwat.cms.domain.Reservation;
@@ -26,14 +25,29 @@ public class ReservationResource {
     @POST
     public Reservation addReservation(Reservation reservation, @Context SecurityContext sc) {
         checkAccess(sc);
-        return service.addReservation(reservation);
+        return service.addReservation(
+                reservation.getNaam(),
+                reservation.getAankomst(),
+                reservation.getVertrek(),
+                reservation.getPlaats(),
+                reservation.getStatus(),
+                reservation.getContact()
+        );
     }
 
     @PUT
     @Path("/{id}")
     public Reservation updateReservation(@PathParam("id") int id, Reservation updated, @Context SecurityContext sc) {
         checkAccess(sc);
-        return service.updateReservation(id, updated);
+        return service.updateReservation(
+                id,
+                updated.getNaam(),
+                updated.getAankomst(),
+                updated.getVertrek(),
+                updated.getPlaats(),
+                updated.getStatus(),
+                updated.getContact()
+        );
     }
 
     @DELETE
