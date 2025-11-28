@@ -37,7 +37,6 @@ public class User implements Principal {
         return this.username.equals(username);
     }
 
-    // Validatie
     private void validateString(String value, String fieldName) {
         if (value == null || value.isBlank()) {
             throw new IllegalArgumentException(fieldName + " mag niet leeg zijn.");

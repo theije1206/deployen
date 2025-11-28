@@ -46,18 +46,31 @@ async function setupReservationsPage() {
   // Haalt alle reserveringen op van de backend.
   async function fetchReservations() {
     try {
+      console.log("Fetching reservations...");
       const r = await fetch("/api/reservations", {
-        headers: { "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaWV0IiwiZXhwIjoxNzY0MDgyNjA5LCJyb2xlIjoiY2FtcGluZ293bmVyIn0.aswIcqi9lt4rTWMHvushlt9vYD0iVqdfGaCelGACLII" }
+        headers: {
+          Authorization:
+            "Bearer " +
+            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaWV0IiwiZXhwIjoxNzY0MzQwMjU0LCJyb2xlIjoiY2FtcGluZ293bmVyIn0.FInomJLke2J7DJvIw94KRdBQ8CBrL4Ro209775ipN2Y",
+        },
       });
-      return r.ok ? await r.json() : [];
+      if (!r.ok) {
+        console.warn(
+          "Request failed, returning empty list"
+        );
+        return [];
+      }
+      const data = await r.json();
+      console.log(`Successfully fetched ${data.length} reservations`);
+      return data;
     } catch (e) {
-      console.error("fetch reservations failed", e);
+      console.error("ERROR:", e);
       return [];
     }
   }
 
   const reservations = await fetchReservations();
-  container.replaceChildren(); 
+  container.replaceChildren();
   reservations.forEach((reservation, index) =>
     container.appendChild(createReservationElement(reservation, index))
   );
@@ -124,7 +137,8 @@ async function setupReservationsPage() {
       const q = searchInput.value.trim().toLowerCase();
       Array.from(container.children).forEach((b) => {
         const naam =
-          b.querySelector(".field-Naam")?.textContent.trim().toLowerCase() || "";
+          b.querySelector(".field-Naam")?.textContent.trim().toLowerCase() ||
+          "";
         b.style.display = naam.includes(q) ? "" : "none";
       });
     });
@@ -153,7 +167,11 @@ async function setupReservationsPage() {
             )
           );
         } else if (sortType === "status") {
-          const statusOrder = { "In behandeling": 1, Bevestigd: 2, Geannuleerd: 3 };
+          const statusOrder = {
+            "In behandeling": 1,
+            Bevestigd: 2,
+            Geannuleerd: 3,
+          };
           const getStatus = (block) =>
             block.querySelector(".field-Status")?.textContent?.trim() || "";
           blocks.sort(
@@ -196,14 +214,14 @@ async function setupReservationsPage() {
       data.status = data.status || "In behandeling";
       const editing = form.dataset.editing;
       const method = editing ? "PUT" : "POST";
-      const url = editing ? `/api/bookings/${editing}` : "/api/bookings";
+      const url = editing ? `/api/reservations/${editing}` : "/api/reservations";
 
       try {
         const r = await fetch(url, {
           method,
           headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + token
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaWV0IiwiZXhwIjoxNzY0MzQwMjU0LCJyb2xlIjoiY2FtcGluZ293bmVyIn0.FInomJLke2J7DJvIw94KRdBQ8CBrL4Ro209775ipN2Y",
           },
           body: JSON.stringify(data),
         });
@@ -245,14 +263,15 @@ async function setupReservationsPage() {
         return;
       }
 
-      if (!confirm("Weet je zeker dat je deze boeking wilt verwijderen?")) return;
+      if (!confirm("Weet je zeker dat je deze boeking wilt verwijderen?"))
+        return;
 
       try {
-        const response = await fetch(`/api/bookings/${editing}`, {
+        const response = await fetch(`/api/reservations/${editing}`, {
           method: "DELETE",
           headers: {
-            "Authorization": "Bearer " + token
-          }
+            Authorization: "Bearer " + token,
+          },
         });
         if (response.ok) {
           const block = container.querySelector(`[data-original='${editing}']`);

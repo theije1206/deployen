@@ -5,6 +5,8 @@ import jakarta.ws.rs.core.MediaType;
 import team.verzinwat.cms.domain.Reservation;
 import team.verzinwat.cms.services.ReservationService;
 import team.verzinwat.cms.data.ReservationConnection;
+import team.verzinwat.cms.data.ReservationDAO;
+import team.verzinwat.cms.data.ReservationDaoPostgres;
 
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
@@ -12,6 +14,7 @@ import jakarta.ws.rs.core.SecurityContext;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+
 
 @Path("/reservations")
 @Produces(MediaType.APPLICATION_JSON)
@@ -23,12 +26,14 @@ public class ReservationResource {
     static {
         try {
             Connection conn = ReservationConnection.getConnection();
-            service = new ReservationService(conn);
+            ReservationDAO dao = new ReservationDaoPostgres(conn);
+            service = new ReservationService(dao);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             throw new RuntimeException("Cannot connect to database", e);
         }
     }
+
 
     @GET
     public List<Reservation> getAll(@Context SecurityContext sc) {
