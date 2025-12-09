@@ -1,58 +1,57 @@
 package team.verzinwat.cms.services;
 
 import team.verzinwat.cms.domain.Reservation;
-import java.util.ArrayList;
+import team.verzinwat.cms.data.ReservationDAO;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ReservationService {
 
-    private final List<Reservation> reservations = new ArrayList<>();
-    private int nextId = 1;
+    private final ReservationDAO dao;
 
-    public ReservationService() {
-        addReservation(new Reservation("Jan Janssen","14-09-2025","16-09-2025","Accommodatie - B - 3","Bevestigd","0612345678"));
-        addReservation(new Reservation("Piet Pietersen","20-09-2025","23-09-2025","Accommodatie - A - 1","In behandeling","0687654321"));
-        addReservation(new Reservation("Kees van der Spek","10-10-2025","12-10-2025","Accommodatie - C - 2","Geannuleerd","0644455566"));
+    public ReservationService(ReservationDAO dao) {
+        this.dao = dao;
     }
 
-    public List<Reservation> getAllReservations() {
-        return reservations;
-    }
+    public Reservation addReservation(String naam, LocalDate aankomst, LocalDate vertrek, String plaats, String status, String contact) {
 
-    public Reservation addReservation(Reservation reservation) {
-        if (reservation.getId() == 0) {
-            reservation.setId(nextId++);
+        Reservation r = new Reservation(naam, aankomst, vertrek, plaats, status, contact);
+        try {
+            boolean saved = dao.save(r);
+            if (!saved) throw new RuntimeException("Reservation could not be saved");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        reservations.add(reservation);
-        return reservation;
+        return r;
     }
 
-    public Reservation updateReservation(int id, Reservation updated) {
-        Reservation existing = reservations.stream()
-                .filter(r -> r.getId() == id)
-                .findFirst()
-                .orElse(null);
+    public Reservation updateReservation(int id, String naam, LocalDate aankomst, LocalDate vertrek, String plaats, String status, String contact) {
 
-        if (existing == null) return null;
-
-        if (updated.getNaam() != null) existing.setNaam(updated.getNaam());
-        if (updated.getAankomst() != null) existing.setAankomst(updated.getAankomst());
-        if (updated.getVertrek() != null) existing.setVertrek(updated.getVertrek());
-        if (updated.getPlaats() != null) existing.setPlaats(updated.getPlaats());
-        if (updated.getContact() != null) existing.setContact(updated.getContact());
-        if (updated.getStatus() != null) existing.setStatus(updated.getStatus());
-
-        return existing;
+        Reservation r = new Reservation(id, naam, aankomst, vertrek, plaats, status, contact);
+        try {
+            boolean updated = dao.update(r);
+            if (!updated) throw new RuntimeException("Reservation not found");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return r;
     }
 
     public boolean deleteReservation(int id) {
-        return reservations.removeIf(r -> r.getId() == id);
+        try {
+            return dao.deleteById(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public Reservation getReservationById(int id) {
-        return reservations.stream()
-                .filter(r -> r.getId() == id)
-                .findFirst()
-                .orElse(null);
+    public List<Reservation> getAllReservations() {
+        try {
+            return dao.findAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

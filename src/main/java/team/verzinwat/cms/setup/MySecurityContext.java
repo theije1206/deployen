@@ -6,7 +6,6 @@ import team.verzinwat.cms.domain.User;
 import java.security.Principal;
 
 public class MySecurityContext implements SecurityContext {
-
     private final User user;
     private final String scheme;
 
@@ -17,7 +16,7 @@ public class MySecurityContext implements SecurityContext {
 
     @Override
     public Principal getUserPrincipal() {
-        return this.user;
+        return user;
     }
 
     @Override
@@ -27,11 +26,11 @@ public class MySecurityContext implements SecurityContext {
 
     @Override
     public boolean isSecure() {
-        return "https".equals(this.scheme);
+        return "https".equalsIgnoreCase(scheme);
     }
 
     @Override
     public String getAuthenticationScheme() {
-        return SecurityContext.BASIC_AUTH;
+        return "Bearer";
     }
 }
