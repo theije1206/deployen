@@ -6,7 +6,6 @@ function createReservationElement(reservation, index) {
   const id = reservation.id ?? reservation._id ?? index + 1;
   node.setAttribute("data-original", id);
 
-  // Vult de gekloonde template.
   const setField = (field, value) => {
     const el = node.querySelector(".field-" + field);
     if (el) el.textContent = value ?? "";
@@ -42,19 +41,36 @@ async function setupReservationsPage() {
 
   if (!container) return;
 
+  const token = sessionStorage.getItem("jwtToken"); // JWT ophalen
+
   // Haalt alle reserveringen op van de backend.
   async function fetchReservations() {
     try {
-      const r = await fetch("/api/reservations");
-      return r.ok ? await r.json() : [];
+      console.log("Fetching reservations...");
+      const r = await fetch("/api/reservations", {
+        headers: {
+          Authorization:
+            "Bearer " +
+            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaWV0IiwiZXhwIjoxNzY1Mjc2MDg3LCJyb2xlIjoiY2FtcGluZ293bmVyIn0.8ZBHyxN23HVpBxYJ55XVDzvH920LjDLN_9Gq0Wyh-xA",
+        },
+      });
+      if (!r.ok) {
+        console.warn(
+          "Request failed, returning empty list"
+        );
+        return [];
+      }
+      const data = await r.json();
+      console.log(`Successfully fetched ${data.length} reservations`);
+      return data;
     } catch (e) {
-      console.error("fetch reservations failed", e);
+      console.error("ERROR:", e);
       return [];
     }
   }
 
   const reservations = await fetchReservations();
-  container.replaceChildren(); 
+  container.replaceChildren();
   reservations.forEach((reservation, index) =>
     container.appendChild(createReservationElement(reservation, index))
   );
@@ -76,7 +92,7 @@ async function setupReservationsPage() {
     formulier.classList.add("hidden");
   }
 
-  // Regelt het klikken binnen de reserveringenlijst (bewerken en details tonen).
+  // Klik events voor bewerken en toggle details
   container.addEventListener("click", (e) => {
     const editBtn = e.target.closest(".edit-button");
     if (editBtn) {
@@ -84,7 +100,6 @@ async function setupReservationsPage() {
       const block = editBtn.closest(".reservation-block");
       if (!block || !form) return;
 
-      // Lees de waarde op basis van het label.
       const getField = (label) => {
         const row = Array.from(block.querySelectorAll("tr")).find(
           (r) => r.querySelector("th")?.textContent.trim() === label
@@ -98,13 +113,13 @@ async function setupReservationsPage() {
       if (form.vertrek) form.vertrek.value = getField("Vertrek");
       if (form.plaats) form.plaats.value = getField("Plaats");
       if (form.contact) form.contact.value = getField("Contact");
+      if (form.status) form.status.value = getField("Status");
 
       if (deleteBtn) deleteBtn.style.display = "inline-block";
       showFormulier("Boeking wijzigen");
       return;
     }
 
-    // Toggle details weergave
     const block = e.target.closest(".reservation-block");
     if (!block) return;
     const details = block.querySelector(".reservation-details");
@@ -113,7 +128,7 @@ async function setupReservationsPage() {
     if (details) details.hidden = expanded;
   });
 
-  // Activeert zoekveld en filtert op naam
+  // Zoekveld functionaliteit
   if (searchToggle && searchInput) {
     searchToggle.addEventListener("click", () => {
       searchInput.classList.toggle("hidden");
@@ -130,7 +145,7 @@ async function setupReservationsPage() {
     });
   }
 
-  // Activeert sorteer functionaliteit voor naam/status/reservering
+  // Sorteren
   if (sortToggle && sortMenu) {
     sortToggle.addEventListener("click", () =>
       sortMenu.classList.toggle("hidden")
@@ -181,7 +196,7 @@ async function setupReservationsPage() {
     });
   }
 
-  // Opent formulier via knop
+  // Open/close formulier
   const openBtn = document.getElementById("open-form-btn");
   if (openBtn)
     openBtn.addEventListener("click", () => {
@@ -189,12 +204,10 @@ async function setupReservationsPage() {
       if (form) form.dataset.editing = "";
       showFormulier("Nieuwe boeking");
     });
-
-  // Sluit formulier via knop
   const closeBtn = document.getElementById("close-formulier");
   if (closeBtn) closeBtn.addEventListener("click", () => hideFormulier());
 
-  // Verstuurt formulierdata naar backend (POST of PUT)
+  // Submit (POST/PUT)
   if (form)
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -202,14 +215,15 @@ async function setupReservationsPage() {
       data.status = data.status || "In behandeling";
       const editing = form.dataset.editing;
       const method = editing ? "PUT" : "POST";
-      const url = editing
-        ? `/api/bookings/${editing}`
-        : "/api/bookings";
+      const url = editing ? `/api/reservations/${editing}` : "/api/reservations";
 
       try {
         const r = await fetch(url, {
           method,
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaWV0IiwiZXhwIjoxNzY1Mjc2MDg3LCJyb2xlIjoiY2FtcGluZ293bmVyIn0.8ZBHyxN23HVpBxYJ55XVDzvH920LjDLN_9Gq0Wyh-xA",
+          },
           body: JSON.stringify(data),
         });
         const saved = await r.json();
@@ -241,7 +255,7 @@ async function setupReservationsPage() {
       }
     });
 
-  // Verwijdert reservering van de backend en frontend
+  // Delete
   if (deleteBtn && form) {
     deleteBtn.addEventListener("click", async () => {
       const editing = form.dataset.editing;
@@ -254,8 +268,11 @@ async function setupReservationsPage() {
         return;
 
       try {
-        const response = await fetch(`/api/bookings/${editing}`, {
+        const response = await fetch(`/api/reservations/${editing}`, {
           method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
         });
         if (response.ok) {
           const block = container.querySelector(`[data-original='${editing}']`);

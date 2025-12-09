@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Boekingen</title>
+    <title>Boekingsoverzicht</title>
   </head>
   <body>
     <section class="reserveringen">
-      <div class="page-header"><h1>Boekingen overzicht</h1></div>
+      <div class="page-header"><h1>Boekingsoverzicht</h1></div>
       <div class="filter-bar">
         <div class="filter-left">
           <div class="search-container">
@@ -113,16 +113,23 @@
           <input name="vertrek" type="date" required />
           <input name="plaats" placeholder="Plaats" required />
           <input name="contact" placeholder="Contact" required />
-
+          <select name="status" required>
+            <option value="In behandeling">In behandeling</option>
+            <option value="Bevestigd">Bevestigd</option>
+            <option value="Afgewezen">Afgewezen</option>
+          </select>
           <button type="submit">Opslaan</button>
           <button type="button" id="close-formulier">Annuleren</button>
-          <button type="button" id="delete-reservation" class="delete-reservation">Verwijderen</button>
+          <button
+            type="button"
+            id="delete-reservation"
+            class="delete-reservation"
+          >
+            Verwijderen
+          </button>
         </form>
       </div>
     </div>
-    <script
-      type="module"
-      src="/src/pages/admin/modules/bookings.js"
-    ></script>
+    <script type="module" src="/src/pages/admin/modules/bookings.js"></script>
   </body>
 </html>
