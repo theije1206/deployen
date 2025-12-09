@@ -21,7 +21,6 @@ public class User implements Principal {
         this(username, "12345", "visitor");
     }
 
-    // Getters
     public String getUsername() { return username; }
     public String getPassword() { return password; }
     public String getRole() { return role; }

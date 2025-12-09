@@ -4,7 +4,6 @@ import team.verzinwat.cms.domain.Reservation;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
 
 public class ReservationDaoPostgres implements ReservationDAO {
 

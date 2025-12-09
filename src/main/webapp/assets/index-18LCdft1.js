@@ -955,16 +955,16 @@ Homepagina
     -->
 </main>
 </body>
-</html>`,V=`<!DOCTYPE html>
+</html>`,B=`<!DOCTYPE html>
 <html lang="nl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Boekingen</title>
+    <title>Boekingsoverzicht</title>
   </head>
   <body>
     <section class="reserveringen">
-      <div class="page-header"><h1>Boekingen overzicht</h1></div>
+      <div class="page-header"><h1>Boekingsoverzicht</h1></div>
       <div class="filter-bar">
         <div class="filter-left">
           <div class="search-container">
@@ -1070,20 +1070,27 @@ Homepagina
           <input name="vertrek" type="date" required />
           <input name="plaats" placeholder="Plaats" required />
           <input name="contact" placeholder="Contact" required />
-
+          <select name="status" required>
+            <option value="In behandeling">In behandeling</option>
+            <option value="Bevestigd">Bevestigd</option>
+            <option value="Afgewezen">Afgewezen</option>
+          </select>
           <button type="submit">Opslaan</button>
           <button type="button" id="close-formulier">Annuleren</button>
-          <button type="button" id="delete-reservation" class="delete-reservation">Verwijderen</button>
+          <button
+            type="button"
+            id="delete-reservation"
+            class="delete-reservation"
+          >
+            Verwijderen
+          </button>
         </form>
       </div>
     </div>
-    <script
-      type="module"
-      src="/src/pages/admin/modules/bookings.js"
-    ><\/script>
+    <script type="module" src="/src/pages/admin/modules/bookings.js"><\/script>
   </body>
 </html>
-`,B=`<!DOCTYPE html>
+`,V=`<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -1311,4 +1318,4 @@ addThisLink('wednesday', 'cat_orders.html');
 
 </body>
 
-</html>`,Z=[{path:"/",document:C},{path:"/admin",document:w},{path:"/dashboard",document:f},{path:"/sanitair",document:y},{path:"/sanitair/hygiene",document:k},{path:"/sanitair/defect",document:x},{path:"/sanitair/all-notifications",document:L},{path:"/sanitair/storage",document:M},{path:"/sanitair/else",document:H},{path:"/reserveringen",document:V},{path:"/catering",document:B},{path:"/catering/orders",document:z},{path:"/catering/bakery",document:P}];new b(Z,{fallback:"/"});
+</html>`,Z=[{path:"/",document:C},{path:"/admin",document:w},{path:"/dashboard",document:f},{path:"/sanitair",document:y},{path:"/sanitair/hygiene",document:k},{path:"/sanitair/defect",document:x},{path:"/sanitair/all-notifications",document:L},{path:"/sanitair/storage",document:M},{path:"/sanitair/else",document:H},{path:"/reserveringen",document:B},{path:"/catering",document:V},{path:"/catering/orders",document:z},{path:"/catering/bakery",document:P}];new b(Z,{fallback:"/"});

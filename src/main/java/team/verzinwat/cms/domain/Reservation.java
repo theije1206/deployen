@@ -16,9 +16,7 @@ public class Reservation {
     public Reservation() {
     }
 
-    // Constructor met LocalDate
-    public Reservation(int id, String naam, LocalDate aankomst, LocalDate vertrek,
-                       String plaats, String status, String contact) {
+    public Reservation(int id, String naam, LocalDate aankomst, LocalDate vertrek, String plaats, String status, String contact) {
         validateString("Naam", naam);
         validateDate("Aankomst", aankomst);
         validateDate("Vertrek", vertrek);
@@ -35,9 +33,7 @@ public class Reservation {
         this.contact = contact;
     }
 
-    // Constructor zonder id
-    public Reservation(String naam, LocalDate aankomst, LocalDate vertrek,
-                       String plaats, String status, String contact) {
+    public Reservation(String naam, LocalDate aankomst, LocalDate vertrek, String plaats, String status, String contact) {
         this(0, naam, aankomst, vertrek, plaats, status, contact);
     }
 

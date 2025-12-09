@@ -51,7 +51,7 @@ async function setupReservationsPage() {
         headers: {
           Authorization:
             "Bearer " +
-            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaWV0IiwiZXhwIjoxNzY0MzQwMjU0LCJyb2xlIjoiY2FtcGluZ293bmVyIn0.FInomJLke2J7DJvIw94KRdBQ8CBrL4Ro209775ipN2Y",
+            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaWV0IiwiZXhwIjoxNzY1Mjc2MDg3LCJyb2xlIjoiY2FtcGluZ293bmVyIn0.8ZBHyxN23HVpBxYJ55XVDzvH920LjDLN_9Gq0Wyh-xA",
         },
       });
       if (!r.ok) {
@@ -113,6 +113,7 @@ async function setupReservationsPage() {
       if (form.vertrek) form.vertrek.value = getField("Vertrek");
       if (form.plaats) form.plaats.value = getField("Plaats");
       if (form.contact) form.contact.value = getField("Contact");
+      if (form.status) form.status.value = getField("Status");
 
       if (deleteBtn) deleteBtn.style.display = "inline-block";
       showFormulier("Boeking wijzigen");
@@ -221,7 +222,7 @@ async function setupReservationsPage() {
           method,
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaWV0IiwiZXhwIjoxNzY0MzQwMjU0LCJyb2xlIjoiY2FtcGluZ293bmVyIn0.FInomJLke2J7DJvIw94KRdBQ8CBrL4Ro209775ipN2Y",
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaWV0IiwiZXhwIjoxNzY1Mjc2MDg3LCJyb2xlIjoiY2FtcGluZ293bmVyIn0.8ZBHyxN23HVpBxYJ55XVDzvH920LjDLN_9Gq0Wyh-xA",
           },
           body: JSON.stringify(data),
         });
