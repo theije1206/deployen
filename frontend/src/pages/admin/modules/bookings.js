@@ -51,7 +51,7 @@ async function setupReservationsPage() {
         headers: {
           Authorization:
             "Bearer " +
-            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaWV0IiwiZXhwIjoxNzY1Mjc2MDg3LCJyb2xlIjoiY2FtcGluZ293bmVyIn0.8ZBHyxN23HVpBxYJ55XVDzvH920LjDLN_9Gq0Wyh-xA",
+            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaWV0IiwiZXhwIjoxNzY1Mjc3ODI2LCJyb2xlIjoiY2FtcGluZ293bmVyIn0.R0G7JiZtD9KrPnLJTbJNgv4DaFMxPoXPnKsvIyIaGxk",
         },
       });
       if (!r.ok) {
@@ -222,7 +222,7 @@ async function setupReservationsPage() {
           method,
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaWV0IiwiZXhwIjoxNzY1Mjc2MDg3LCJyb2xlIjoiY2FtcGluZ293bmVyIn0.8ZBHyxN23HVpBxYJ55XVDzvH920LjDLN_9Gq0Wyh-xA",
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaWV0IiwiZXhwIjoxNzY1Mjc3ODI2LCJyb2xlIjoiY2FtcGluZ293bmVyIn0.R0G7JiZtD9KrPnLJTbJNgv4DaFMxPoXPnKsvIyIaGxk",
           },
           body: JSON.stringify(data),
         });
