@@ -19,6 +19,6 @@ public class RentingResource {
 
     @GET
     public List<Product> getAll() {
-        return service.getAllProdcucts();
+        return service.getAllProducts();
     }
 }

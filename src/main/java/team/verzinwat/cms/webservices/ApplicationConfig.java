@@ -1,12 +1,18 @@
 package team.verzinwat.cms.webservices;
 
 import jakarta.ws.rs.ApplicationPath;
-import org.glassfish.jersey.server.ResourceConfig;
+import jakarta.ws.rs.core.Application;
+import java.util.Set;
+import java.util.HashSet;
 
 @ApplicationPath("/api")
-public class ApplicationConfig extends ResourceConfig {
+public class ApplicationConfig extends Application {
 
-    public ApplicationConfig() {
-        packages("team.verzinwat.cms.webservices");
+    @Override
+    public Set<Class<?>> getClasses() {
+        Set<Class<?>> resources = new HashSet<>();
+        resources.add(RentingResource.class);
+        resources.add(ProductReservationResource.class);
+        return resources;
     }
 }
