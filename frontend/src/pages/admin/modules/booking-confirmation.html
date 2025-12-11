@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservering Bevestigd</title>
+</head>
+<body>
+    <h1>Bedankt voor uw reservering!</h1>
+    <p>Uw reserveringsnummer is:</p>
+    <h2 id="res-id"></h2>
+
+    <a href="/kanoverhuur.html">Terug naar home</a>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+
+        document.getElementById('res-id').textContent = id;
+    </script>
+</body>
+</html>

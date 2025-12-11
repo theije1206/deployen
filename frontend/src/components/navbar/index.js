@@ -1,0 +1,146 @@
+import {svgFromString} from "@/utils/DOMUtils.js";
+import styles from "@/components/navbar/navbar.module.css";
+import "@/styles/typography.css";
+
+const PAGES = [
+    {
+        title: "Overzicht",
+        path: "/admin/",
+        icon: "<svg class=\"navigation-icon\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" > <path d=\"M13.1111 15.1111C13.1111 14.0065 14.0065 13.1111 15.1111 13.1111H20C21.1046 13.1111 22 14.0065 22 15.1111V20C22 21.1046 21.1046 22 20 22H15.1111C14.0065 22 13.1111 21.1046 13.1111 20V15.1111ZM15.1111 10.8889C14.0065 10.8889 13.1111 9.99346 13.1111 8.88889V4C13.1111 2.89543 14.0065 2 15.1111 2H20C21.1046 2 22 2.89543 22 4V8.88889C22 9.99346 21.1046 10.8889 20 10.8889H15.1111ZM10.8889 8.88889C10.8889 9.99346 9.99346 10.8889 8.88889 10.8889H4C2.89543 10.8889 2 9.99346 2 8.88889V4C2 2.89543 2.89543 2 4 2H8.88889C9.99346 2 10.8889 2.89543 10.8889 4V8.88889ZM8.88889 13.1111C9.99346 13.1111 10.8889 14.0065 10.8889 15.1111V20C10.8889 21.1046 9.99346 22 8.88889 22H4C2.89543 22 2 21.1046 2 20V15.1111C2 14.0065 2.89543 13.1111 4 13.1111H8.88889Z\" fill=\"currentColor\" /> </svg>"
+    },
+    {
+        title: "Modules",
+        path: "/admin/modules/",
+        icon: "<svg class=\"navigation-icon\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" > <path d=\"M20.88 7.175C20.1604 6.45788 19.1859 6.05515 18.17 6.055H13.81C13.6501 6.05564 13.4923 6.01792 13.35 5.945C13.2057 5.86926 13.0821 5.75941 12.99 5.625L12.12 4.295C11.7689 3.7683 11.293 3.33657 10.7347 3.03823C10.1764 2.73989 9.55301 2.58419 8.92 2.585H5.84C4.8233 2.585 3.84809 2.98819 3.12824 3.70617C2.40839 4.42415 2.00265 5.3983 2 6.415V17.575C2.00525 18.5918 2.41151 19.5655 3.13052 20.2845C3.84952 21.0035 4.82319 21.4097 5.84 21.415H18.17C19.1867 21.4124 20.1609 21.0066 20.8788 20.2868C21.5968 19.5669 22 18.5917 22 17.575V9.925C22.0075 9.41491 21.9121 8.90854 21.7197 8.43608C21.5273 7.96361 21.2417 7.53473 20.88 7.175ZM16.63 17.045H7.38C7.11478 17.045 6.86043 16.9396 6.67289 16.7521C6.48536 16.5646 6.38 16.3102 6.38 16.045C6.38 15.7798 6.48536 15.5254 6.67289 15.3379C6.86043 15.1504 7.11478 15.045 7.38 15.045H16.63C16.8952 15.045 17.1496 15.1504 17.3371 15.3379C17.5246 15.5254 17.63 15.7798 17.63 16.045C17.63 16.3102 17.5246 16.5646 17.3371 16.7521C17.1496 16.9396 16.8952 17.045 16.63 17.045Z\" fill=\"currentColor\" /> </svg>"
+    },
+    {
+        title: "Pagina's",
+        path: "/admin/pages/",
+        icon: "<svg class=\"navigation-icon\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" > <mask id=\"mask0_315_312\" style=\"mask-type: luminance\" maskUnits=\"userSpaceOnUse\" x=\"4\" y=\"2\" width=\"16\" height=\"20\" > <path d=\"M13.5 3L19 8.5V20C19 20.55 18.55 21 18 21H6C5.45 21 5 20.55 5 20V4C5 3.45 5.45 3 6 3H13.5Z\" fill=\"white\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /> <path d=\"M14.5 3.5V8H19L14.5 3.5Z\" fill=\"black\" stroke=\"black\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /> <path d=\"M13.5 3L19 8.5\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /> </mask> <g mask=\"url(#mask0_315_312)\"> <path d=\"M24 0H0V24H24V0Z\" fill=\"currentColor\" /> </g> </svg>"
+    },
+    {
+        title: "Berichten",
+        path: "/admin/messages/",
+        icon: "<svg class=\"navigation-icon\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" > <path d=\"M5 2.565H19C19.7956 2.565 20.5587 2.88107 21.1213 3.44368C21.6839 4.00629 22 4.76935 22 5.565V13.565C22 14.3606 21.6839 15.1237 21.1213 15.6863C20.5587 16.2489 19.7956 16.565 19 16.565H12.042L5.598 21.373C5.44922 21.484 5.27248 21.5514 5.08756 21.5677C4.90265 21.5839 4.71686 21.5484 4.551 21.465C4.38513 21.3817 4.24574 21.2538 4.14843 21.0957C4.05111 20.9377 3.99972 20.7556 4 20.57V16.564C3.46957 16.564 2.96086 16.3533 2.58579 15.9782C2.21071 15.6031 2 15.0944 2 14.564V5.564C2 4.76835 2.31607 4.00529 2.87868 3.44268C3.44129 2.88007 4.20435 2.565 5 2.565Z\" fill=\"currentColor\" /> </svg>"
+    },
+    {
+        title: "Account",
+        path: "/admin/account/",
+        icon: "<svg class=\"navigation-icon\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" > <mask id=\"path-1-inside-1_508_210\" fill=\"white\"> <path d=\"M19.652 19.405C20.204 19.29 20.534 18.712 20.259 18.218C19.653 17.131 18.699 16.175 17.479 15.447C15.907 14.509 13.98 14 12 14C10.02 14 8.09303 14.508 6.52103 15.447C5.30103 16.175 4.34703 17.131 3.74103 18.218C3.46603 18.712 3.79603 19.29 4.34803 19.405C9.3948 20.4569 14.6043 20.4569 19.651 19.405\" /> </mask> <path d=\"M19.652 19.405C20.204 19.29 20.534 18.712 20.259 18.218C19.653 17.131 18.699 16.175 17.479 15.447C15.907 14.509 13.98 14 12 14C10.02 14 8.09303 14.508 6.52103 15.447C5.30103 16.175 4.34703 17.131 3.74103 18.218C3.46603 18.712 3.79603 19.29 4.34803 19.405C9.3948 20.4569 14.6043 20.4569 19.651 19.405\" fill=\"currentColor\" /> <path d=\"M20.259 18.218L21.5696 17.4884L21.5692 17.4876L20.259 18.218ZM17.479 15.447L18.2477 14.1589L18.2476 14.1589L17.479 15.447ZM6.52103 15.447L7.28966 16.7351L7.29024 16.7348L6.52103 15.447ZM3.74103 18.218L2.43087 17.4876L2.43042 17.4884L3.74103 18.218ZM4.34803 19.405L4.65409 17.9366L4.65396 17.9365L4.34803 19.405ZM19.652 19.405L19.958 20.8735C21.3002 20.5938 22.432 19.0375 21.5696 17.4884L20.259 18.218L18.9484 18.9476C18.82 18.7169 18.8379 18.444 18.9408 18.2503C19.0341 18.0745 19.1885 17.9694 19.3461 17.9365L19.652 19.405ZM20.259 18.218L21.5692 17.4876C20.8195 16.1429 19.6654 15.0049 18.2477 14.1589L17.479 15.447L16.7104 16.7351C17.7327 17.3451 18.4866 18.1191 18.9489 18.9484L20.259 18.218ZM17.479 15.447L18.2476 14.1589C16.4244 13.071 14.2279 12.5 12 12.5V14V15.5C13.7322 15.5 15.3896 15.947 16.7104 16.7351L17.479 15.447ZM12 14V12.5C9.77274 12.5 7.57579 13.0697 5.75182 14.1592L6.52103 15.447L7.29024 16.7348C8.61026 15.9463 10.2673 15.5 12 15.5V14ZM6.52103 15.447L5.75239 14.1589C4.33465 15.0049 3.18056 16.1429 2.43087 17.4876L3.74103 18.218L5.05118 18.9484C5.5135 18.1191 6.2674 17.3451 7.28966 16.7351L6.52103 15.447ZM3.74103 18.218L2.43042 17.4884C1.56808 19.0375 2.69981 20.5938 4.0421 20.8735L4.34803 19.405L4.65396 17.9365C4.81159 17.9694 4.96598 18.0745 5.05928 18.2503C5.16212 18.444 5.18008 18.7169 5.05164 18.9476L3.74103 18.218ZM4.34803 19.405L4.04197 20.8734C9.29061 21.9674 14.7084 21.9674 19.9571 20.8734L19.651 19.405L19.345 17.9366C14.5001 18.9464 9.49899 18.9464 4.65409 17.9366L4.34803 19.405Z\" fill=\"currentColor\" mask=\"url(#path-1-inside-1_508_210)\" /> <path d=\"M12 3.75C14.3472 3.75 16.25 5.65279 16.25 8C16.25 10.3472 14.3472 12.25 12 12.25C9.65279 12.25 7.75 10.3472 7.75 8C7.75 5.65279 9.65279 3.75 12 3.75Z\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"1.5\" /> </svg>"
+    }
+];
+
+function normalizePath(path) {
+    const pathname = new URL(path, location.origin).pathname;
+    return pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
+}
+
+function isActive(currentPath, targetPath) {
+    const current = normalizePath(currentPath);
+    const target = normalizePath(targetPath);
+
+    if (!target) {
+        return false;
+    }
+
+    if (current === target) {
+        return true;
+    }
+
+    if (target === "/admin") {
+        return false;
+    }
+
+    return current.startsWith(target + "/");
+}
+
+function joinBase(p) {
+    const base = import.meta.env.BASE_URL || "/";
+    const baseURL = new URL(base, window.location.origin); // make absolute
+    return new URL(p.replace(/^\/+/, ""), baseURL).pathname;
+}
+
+
+function Navbar() {
+    const NAVIGATION = document.createElement("nav");
+    const NAVIGATION_LIST = document.createElement("ul");
+    const ACCOUNT_INFO = AccountInfo("https://i.pinimg.com/564x/3a/3d/4b/3a3d4b04d70cc293fadf195b4e1a7bcb.jpg", "John Smith", "Het Boomstammetje");
+
+    NAVIGATION.classList.add(styles.navigation);
+    NAVIGATION_LIST.classList.add(styles.navigationList);
+
+
+    NAVIGATION.appendChild(NAVIGATION_LIST);
+
+    PAGES.forEach((page) => NAVIGATION_LIST.appendChild(NavigationItem(page.path, page.title, page?.icon)));
+
+    NAVIGATION_LIST.lastElementChild.id = styles.navigationAccountButton;
+    NAVIGATION.appendChild(ACCOUNT_INFO);
+
+    return NAVIGATION;
+}
+
+function NavigationItem(href, text, icon) {
+    const NAVIGATION_ITEM = document.createElement("li");
+    const NAVIGATION_CONTENT = document.createElement("a");
+    const NAVIGATION_TEXT = document.createElement("span");
+    const NAVIGATION_ICON_WRAPPER = document.createElement("span");
+    const NAVIGATION_ICON = svgFromString(icon);
+
+    let path = window.location.pathname;
+
+    NAVIGATION_ITEM.classList.add(styles.navigationItem);
+    NAVIGATION_CONTENT.classList.add(styles.navigationContent);
+    NAVIGATION_TEXT.classList.add(styles.navigationText, "paragraph");
+    NAVIGATION_ICON_WRAPPER.classList.add(styles.navigationIcon);
+    const PATH = path.replace("/cms_war_exploded", "");
+    const target = joinBase(href || "");
+
+
+    NAVIGATION_CONTENT.setAttribute("href", target);
+
+    NAVIGATION_TEXT.textContent = text;
+
+    NAVIGATION_ITEM.appendChild(NAVIGATION_CONTENT);
+    NAVIGATION_CONTENT.appendChild(NAVIGATION_TEXT);
+    NAVIGATION_CONTENT.prepend(NAVIGATION_ICON_WRAPPER);
+    NAVIGATION_ICON_WRAPPER.appendChild(NAVIGATION_ICON);
+
+    if (isActive(PATH, href)) {
+        NAVIGATION_ITEM.classList.add(styles.selected);
+    }
+
+    return NAVIGATION_ITEM;
+}
+
+function AccountInfo(image, name, company) {
+    const WRAPPER = document.createElement("div");
+    const ACCOUNT_IMAGE = document.createElement("img");
+    const ACCOUNT_CONTENT = document.createElement("div");
+    const ACCOUNT_NAME = document.createElement("p");
+    const ACCOUNT_COMPANY = document.createElement("p");
+
+    WRAPPER.classList.add(styles.accountInformation);
+    ACCOUNT_IMAGE.classList.add(styles.accountImage);
+    ACCOUNT_CONTENT.classList.add(styles.accountContent);
+    ACCOUNT_NAME.classList.add(styles.accountName, "paragraph");
+    ACCOUNT_COMPANY.classList.add(styles.accountCompany, "paragraph");
+
+    ACCOUNT_IMAGE.setAttribute("alt", "account-photo");
+    ACCOUNT_IMAGE.setAttribute("src", image);
+    ACCOUNT_IMAGE.setAttribute("width", "46");
+    ACCOUNT_IMAGE.setAttribute("height", "46");
+
+    ACCOUNT_NAME.textContent = name;
+    ACCOUNT_COMPANY.textContent = company;
+
+    WRAPPER.appendChild(ACCOUNT_IMAGE);
+    WRAPPER.appendChild(ACCOUNT_CONTENT);
+    ACCOUNT_CONTENT.appendChild(ACCOUNT_NAME);
+    ACCOUNT_CONTENT.appendChild(ACCOUNT_COMPANY);
+
+    return WRAPPER;
+}
+
+
+export default Navbar;

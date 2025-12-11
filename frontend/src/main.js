@@ -8,6 +8,7 @@ import '@/styles/notifications.css';
 import '@/styles/sanitair.css';
 import '@/styles/bookings.css';
 import '@/styles/catering.css'
+import '@/styles/kanoverhuur.css'
 
 
 import Router from "@/framework/router";
@@ -24,6 +25,7 @@ import reservationsPage from '@/pages/admin/modules/bookings.html?raw';
 import cateringPage from "@/pages/catering.html?raw"
 import cateringOrder from "@/pages/cat_orders.html?raw"
 import cateringBakery from "@/pages/cat_bakery.html?raw"
+import kanoverhuurPage from '@/pages/admin/modules/kanoverhuur.html?raw';
 
 
 /**
@@ -81,7 +83,12 @@ const ROUTES = [
     {
         path: "/catering/bakery",
         document: cateringBakery
+    },
+    {
+        path: "/kanoverhuur",
+        document: kanoverhuurPage
     }
+
 ];
 
 new Router(ROUTES, {fallback: "/"});
