@@ -18,6 +18,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProductReservationResource {
 
+
     private static final ProductReservationService service = new ProductReservationService();
 
     @POST
@@ -25,7 +26,6 @@ public class ProductReservationResource {
         if (reservation == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<ProductReservation>> violations = validator.validate(reservation);
