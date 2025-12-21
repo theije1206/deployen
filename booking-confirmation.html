@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservering Bevestigd</title>
+</head>
+<body>
+    <h1>Bedankt voor uw reservering!</h1>
+    
+    <p>Uw reserveringsnummer: <span id="res-id"></span></p>
+    <p>Aantal kano's: <span id="kano-count"></span></p>
+    <p>Datum: <span id="rental-date"></span></p>
+    <p>Tijd: <span id="rental-time"></span></p>
+    <p>Duur: <span id="rental-duration"></span></p>
+    <p>Naam: <span id="name"></span></p>
+    <p>Telefoon: <span id="phone"></span></p>
+    <p>Email: <span id="email"></span></p>
+
+    <a href="/kanoverhuur">Terug naar home</a>
+
+    <script>
+        async function fetchReservationInfo() {
+            try {
+                const response = await fetch("/api/product-reservations");
+                if (!response.ok) throw new Error("Serverfout");
+
+                const reservations = await response.json();
+
+                if (!reservations || reservations.length === 0) {
+                    document.getElementById("res-id").textContent = "Geen reserveringen gevonden.";
+                    return;
+                }
+
+                const last = reservations[reservations.length - 1];
+
+                document.getElementById("res-id").textContent = last.id;
+                document.getElementById("kano-count").textContent = last.kanoCount;
+                document.getElementById("rental-date").textContent = last.rentalDate;
+                document.getElementById("rental-time").textContent = last.rentalTime;
+                document.getElementById("rental-duration").textContent = last.rentalDuration;
+                document.getElementById("name").textContent = last.name;
+                document.getElementById("phone").textContent = last.contact;
+                document.getElementById("email").textContent = last.email;
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        fetchReservationInfo();
+    </script>
+</body>
+</html>
