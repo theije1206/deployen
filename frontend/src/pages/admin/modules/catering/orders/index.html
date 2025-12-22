@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard | Bestellingen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400...700&display=swap"
+            rel="stylesheet"
+    />
+</head>
+<body class="panel grid">
+<main class="main">
+
+<header class="orders-1">
+    <h1 class="mobile-heading-03">Overzicht Maandag</h1>
+</header>
+
+<div class="row">
+    <button class="filled-button">Item toevoegen</button>
+</div>
+
+
+
+<div class="tab-container">
+    <a class="tab-button" >Bestellingen</a>
+    <a class="tab-button active" href="%BASE_URL%admin/modules/catering/bakery/">Broodjes</a>
+</div>
+
+<div class="time-filter">
+    <button class="time-button active">Dag</button>
+    <button class="time-button">Week</button>
+    <button class="time-button">Maand</button>
+    <button class="time-button">Jaar</button>
+</div>
+<div class="container orders-table">
+    <table>
+        <thead>
+        <tr>
+            <th class="datum">Datum</th>
+            <th class="items">Item</th>
+            <th class="aantal">Aantal</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="mobile-paragraph date">22/09/25</td>
+            <td class="mobile-paragraph items">Croissant</td>
+            <td class="mobile-paragraph amount">25x</td>
+        </tr>
+        <tr>
+            <td class="mobile-paragraph date">22/09/25</td>
+            <td class="mobile-paragraph items">Stokbrood</td>
+            <td class="mobile-paragraph amount">25x</td>
+        </tr>
+        <tr>
+            <td class="mobile-paragraph date">22/09/25</td>
+            <td class="mobile-paragraph items">Frikandelbroodje</td>
+            <td class="mobile-paragraph amount">25x</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+    </main>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
