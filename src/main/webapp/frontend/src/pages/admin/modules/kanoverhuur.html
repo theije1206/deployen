@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kano Verhuur</title>
+</head>
+<body>
+    <div id="header">
+        <h1>Kano Verhuur</h1>
+    <p>Hier kunt u de beste kano's huren</p>
+    </div>
+    <form id="renting-list">
+    <label for="kano-type">Kies een kano type:</label>
+    <select id="kano-type" select="rental-option"></select>
+
+    <div id="kano-quantity">
+        <label for="kano-count">Aantal kano's:</label>
+        <select id="kano-count" name="kano-count">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </div>
+
+    <div id="rental-calendar">
+        <label for="rental-date">Selecteer datum:</label>
+        <input type="date" id="start" name="trip-start" value="2025-12-10" min="2025-01-01" max="2025-12-31"/>
+        <label for="rental-time">Selecteer tijd:</label>
+        <input type="time" id="rental-time" name="rental-time" value="10:00" min="09:00" max="18:00"/>
+    </div>
+
+    <div id="rental-information">
+        <div id="rental-duration">
+            <label for="duration-select">Duur van de huur:</label>
+            <select id="duration-select" name="duration-select">
+                <option value="1">1 uur</option>
+                <option value="2">2 uur</option>
+                <option value="3">3 uur</option>
+                <option value="4">4 uur</option>
+                <option value="5">5 uur</option>
+            </select>
+        </div>
+
+        <div id="personal-information">
+            <label for="name-info">Naam:</label>   
+            <input type="text" id="name-info" name="name-info" />
+            <label for="contact-info">Telefoonnummer:</label>
+            <input type="text" id="contact-info" name="contact-info" />
+            <label for="email-info">E-mail:</label>
+            <input type="text" id="email-info" name="email-info" />
+        </div>
+
+        <button type="submit" id="submit-rental">Verhuur aanvragen</button>
+    </div>
+</form>
+
+    <script src="/src/pages/admin/modules/kanoverhuur.js"></script>
+</body>
+</html>

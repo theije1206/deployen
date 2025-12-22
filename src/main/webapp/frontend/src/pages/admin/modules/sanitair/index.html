@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard | Sanitair</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400...700&display=swap"
+            rel="stylesheet"
+    />
+</head>
+<body class="panel grid">
+<main class="main">
+    <header class="header-bar">
+        <a class="back-btn" a href="/dashboard">&lt;</a>
+        <h1>Sanitair beheer</h1>
+    </header>
+    <div>
+        <section class="inboxes">
+            <div class="inbox-main">
+                <!--<a href="/sanitair/all-notifications" class="inbox inbox-main"> -->
+                <a href="%BASE_URL%admin/modules/sanitair/meldingen/"
+                   class="inbox inbox-main">
+                    <h2>Alle meldingen</h2>
+                    <p>5 nieuwe meldingen</p>
+                </a>
+            </div>
+
+            <div class="inbox-row">
+                <!--<a href="/sanitair/hygiene" class="inbox inbox-type"> -->
+                <a href="%BASE_URL%admin/modules/sanitair/hygiene/"
+                   class="inbox inbox-type">
+                    <h3>Hygiëne</h3>
+                    <p>2 nieuwe meldingen</p>
+                </a>
+                <!--<a href="/sanitair/defect" class="inbox inbox-type">-->
+                <a href="%BASE_URL%admin/modules/sanitair/defect/"
+                   class="inbox inbox-type">
+                    <h3>Defect</h3>
+                    <p>1 nieuwe melding</p>
+                </a>
+                <!--<a href="/sanitair/storage" class="inbox inbox-type">-->
+                <a href="%BASE_URL%admin/modules/sanitair/voorraad/"
+                   class="inbox inbox-type">
+                    <h3>Voorraad</h3>
+                    <p>2 nieuwe meldingen</p>
+                </a>
+                <!--<a href="/sanitair/else" class="inbox inbox-type">-->
+                <a href="%BASE_URL%admin/modules/sanitair/anders/"
+                   class="inbox inbox-type">
+                    <h3>Anders</h3>
+                    <p>Geen meldingen</p>
+                </a>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<script type="module" src="main.js"></script>
+
+</body>
+</html>

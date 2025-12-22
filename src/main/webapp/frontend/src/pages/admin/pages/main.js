@@ -1,0 +1,191 @@
+import Navbar from "@/components/navbar/index.js";
+import "@/styles/global.css";
+import "@/styles/typography.css";
+import "@/pages/admin/pages/style.css";
+import "@/styles/button.css";
+import {svgFromString} from "@/utils/DOMUtils.js";
+
+const navbar = Navbar();
+
+document.querySelector("body").prepend(navbar);
+
+const EDIT_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 12 12" fill="none"><path d="M7.00002 2.33333L9.66669 5M0.666687 11.3333H3.33335L10.3334 4.33333C10.5084 4.15824 10.6473 3.95037 10.7421 3.72159C10.8369 3.49282 10.8856 3.24762 10.8856 3C10.8856 2.75238 10.8369 2.50718 10.7421 2.2784C10.6473 2.04963 10.5084 1.84176 10.3334 1.66666C10.1583 1.49157 9.95039 1.35268 9.72162 1.25791C9.49284 1.16315 9.24764 1.11438 9.00002 1.11438C8.7524 1.11438 8.5072 1.16315 8.27843 1.25791C8.04965 1.35268 7.84178 1.49157 7.66669 1.66666L0.666687 8.66666V11.3333Z" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const SHOWN_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M7.99999 6C8.53042 6 9.03913 6.21071 9.4142 6.58579C9.78928 6.96086 9.99999 7.46957 9.99999 8C9.99999 8.53043 9.78928 9.03914 9.4142 9.41421C9.03913 9.78929 8.53042 10 7.99999 10C7.46956 10 6.96085 9.78929 6.58578 9.41421C6.2107 9.03914 5.99999 8.53043 5.99999 8C5.99999 7.46957 6.2107 6.96086 6.58578 6.58579C6.96085 6.21071 7.46956 6 7.99999 6ZM7.99999 3C11.3333 3 14.18 5.07333 15.3333 8C14.18 10.9267 11.3333 13 7.99999 13C4.66666 13 1.81999 10.9267 0.666656 8C1.81999 5.07333 4.66666 3 7.99999 3ZM2.11999 8C2.65883 9.10021 3.49553 10.0272 4.53498 10.6755C5.57442 11.3238 6.77492 11.6675 7.99999 11.6675C9.22506 11.6675 10.4256 11.3238 11.465 10.6755C12.5045 10.0272 13.3412 9.10021 13.88 8C13.3412 6.8998 12.5045 5.97283 11.465 5.3245C10.4256 4.67616 9.22506 4.33245 7.99999 4.33245C6.77492 4.33245 5.57442 4.67616 4.53498 5.3245C3.49553 5.97283 2.65883 6.8998 2.11999 8Z" fill="currentColor" /></svg>`;
+const HIDDEN_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 14" fill="none"><path d="M1.33332 2.84667L2.18666 2L13.3333 13.1467L12.4867 14L10.4333 11.9467C9.66666 12.2 8.85332 12.3333 7.99999 12.3333C4.66666 12.3333 1.81999 10.26 0.666656 7.33333C1.12666 6.16 1.85999 5.12667 2.79332 4.30667L1.33332 2.84667ZM7.99999 5.33333C8.53042 5.33333 9.03913 5.54405 9.4142 5.91912C9.78928 6.29419 9.99999 6.8029 9.99999 7.33333C10.0003 7.56038 9.962 7.78582 9.88666 8L7.33332 5.44667C7.5475 5.37132 7.77295 5.333 7.99999 5.33333ZM7.99999 2.33333C11.3333 2.33333 14.18 4.40667 15.3333 7.33333C14.7889 8.71529 13.8644 9.91488 12.6667 10.7933L11.72 9.84C12.642 9.2023 13.3855 8.3394 13.88 7.33333C13.3411 6.23324 12.5044 5.30642 11.4649 4.65824C10.4254 4.01005 9.22498 3.66651 7.99999 3.66667C7.27332 3.66667 6.55999 3.78667 5.89332 4L4.86666 2.98C5.82666 2.56667 6.88666 2.33333 7.99999 2.33333ZM2.11999 7.33333C2.65889 8.43342 3.49563 9.36025 4.53508 10.0084C5.57453 10.6566 6.775 11.0002 7.99999 11C8.45999 11 8.91332 10.9533 9.33332 10.86L7.81332 9.33333C7.34943 9.28361 6.91654 9.07658 6.58664 8.74668C6.25674 8.41678 6.04971 7.98389 5.99999 7.52L3.73332 5.24667C3.07332 5.81333 2.51999 6.52 2.11999 7.33333Z" fill="currentColor"/></svg>`;
+const DELETE_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.3333 3.33334V2.66668C11.3333 2.31305 11.1929 1.97392 10.9428 1.72387C10.6928 1.47382 10.3536 1.33334 10 1.33334H6C5.64638 1.33334 5.30724 1.47382 5.05719 1.72387C4.80714 1.97392 4.66667 2.31305 4.66667 2.66668V3.33334H2.66667C2.48986 3.33334 2.32029 3.40358 2.19526 3.52861C2.07024 3.65363 2 3.8232 2 4.00001C2 4.17682 2.07024 4.34639 2.19526 4.47141C2.32029 4.59644 2.48986 4.66668 2.66667 4.66668H3.33333V12C3.33333 12.5304 3.54405 13.0392 3.91912 13.4142C4.29419 13.7893 4.8029 14 5.33333 14H10.6667C11.1971 14 11.7058 13.7893 12.0809 13.4142C12.456 13.0392 12.6667 12.5304 12.6667 12V4.66668H13.3333C13.5101 4.66668 13.6797 4.59644 13.8047 4.47141C13.9298 4.34639 14 4.17682 14 4.00001C14 3.8232 13.9298 3.65363 13.8047 3.52861C13.6797 3.40358 13.5101 3.33334 13.3333 3.33334H11.3333ZM10 2.66668H6V3.33334H10V2.66668ZM11.3333 4.66668H4.66667V12C4.66667 12.1768 4.7369 12.3464 4.86193 12.4714C4.98695 12.5964 5.15652 12.6667 5.33333 12.6667H10.6667C10.8435 12.6667 11.013 12.5964 11.1381 12.4714C11.2631 12.3464 11.3333 12.1768 11.3333 12V4.66668Z" fill="currentColor"/><path d="M6 6H7.33333V11.3333H6V6ZM8.66667 6H10V11.3333H8.66667V6Z" fill="currentColor"/></svg>`;
+
+function createControlItem({element, icon, ariaLabel}) {
+    const item = document.createElement("li");
+    const button = document.createElement(element);
+
+    item.classList.add("page-control-item");
+    button.classList.add("button", "button-icon", "small");
+    if (ariaLabel) {
+        button.ariaLabel = ariaLabel;
+    }
+
+    if (icon) {
+        button.appendChild(svgFromString(icon));
+    }
+
+    item.appendChild(button);
+
+    return item;
+}
+
+function showButton(page, onclick) {
+    const button = createControlItem({
+        element: "button",
+        icon: HIDDEN_ICON,
+        ariaLabel: "show-page-button"
+    });
+
+    const child = button.firstChild;
+    child.addEventListener("click", () => onclick(page.uuid));
+
+    button.classList.add("show");
+
+    return button;
+}
+
+function hideButton(page, onclick) {
+    const button = createControlItem({
+        element: "button",
+        icon: SHOWN_ICON,
+        ariaLabel: "hide-page-button"
+    });
+
+    const child = button.firstChild;
+    child.addEventListener("click", () => onclick(page.uuid));
+
+    button.classList.add("hide");
+
+    return button;
+}
+
+function deleteButton(page, onclick) {
+    const button = createControlItem({
+        element: "button",
+        icon: DELETE_ICON,
+        ariaLabel: "delete-page-button"
+    });
+
+    const child = button.firstChild;
+    child.addEventListener("click", () => onclick(page.uuid));
+
+    button.classList.add("delete");
+
+    return button;
+}
+
+function editButton(route) {
+    const button = createControlItem({
+        element: "a",
+        icon: EDIT_ICON,
+        ariaLabel: "edit-page-button"
+    });
+
+    const child = button.firstChild;
+
+    button.classList.add("edit");
+    child.setAttribute("href", `/admin/pages/edit?id=${route.uuid}`);
+
+    return button;
+}
+
+function createTitle(content) {
+    const title = document.createElement("h2");
+
+    title.classList.add("page-title", "heading-three");
+    title.textContent = content ?? "Title";
+
+    return title;
+}
+
+let PAGES = [];
+const CONTENT_ELEMENT = document.querySelector(".page-list-content");
+const visibilityTab = document.querySelector(`[aria-label="page-visbility-filter"]`);
+let showHidden = true;
+
+function toggleVisibility(uuid) {
+    const page = PAGES.find(p => p.uuid === uuid);
+    if (!page) return;
+    page.visible = !page.visible;
+    render();
+}
+
+function deletePage(uuid) {
+    PAGES = PAGES.filter(p => p.uuid !== uuid);
+    render();
+}
+
+function createPageItem(page) {
+    const article = document.createElement("article");
+    const title = createTitle(page.title);
+    const iconContainer = document.createElement("div");
+    const controls = document.createElement("menu");
+
+    article.dataset.id = page.uuid;
+    article.classList.add("page-item");
+    iconContainer.classList.add("button", "button-icon", "medium");
+    controls.classList.add("page-controls");
+
+    if (page.icon) {
+        iconContainer.appendChild(svgFromString(page.icon));
+        article.appendChild(iconContainer);
+    }
+
+    article.appendChild(title);
+    article.appendChild(controls);
+
+    controls.appendChild(
+        page.visible ? hideButton(page, toggleVisibility)
+            : showButton(page, toggleVisibility)
+    );
+    controls.appendChild(editButton(page));
+    controls.appendChild(deleteButton(page, deletePage));
+
+    return article;
+}
+
+function render() {
+    const fragment = document.createDocumentFragment();
+    const list = PAGES.filter(p => (showHidden ? true : p.visible));
+
+    for (const page of list) {
+        fragment.appendChild(createPageItem(page));
+    }
+
+    CONTENT_ELEMENT.replaceChildren(fragment);
+}
+
+visibilityTab?.addEventListener("click", () => {
+    visibilityTab.classList.toggle("active");
+    showHidden = !showHidden;
+    render();
+});
+
+async function init() {
+    try {
+        const res = await fetch("/api/pages");
+        if (!res.ok) {
+            throw new Error(`HTTP ${res.status}`);
+        }
+        const data = await res.json();
+
+        PAGES = data.map(p => ({
+            uuid: p.id ?? p.uuid,
+            title: p.title,
+            visible: p.visible ?? p.visibility ?? true,
+            icon: p.icon.content ?? null
+        }));
+        
+        render();
+    } catch (err) {
+        console.error("Failed to load pages:", err);
+        PAGES = [];
+        render();
+    }
+}
+
+init();
