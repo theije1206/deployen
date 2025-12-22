@@ -111,7 +111,6 @@
 
     <build>
         <plugins>
-            <!-- Maven Compiler Plugin met Java 23 ondersteuning -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -121,8 +120,6 @@
                     <target>23</target>
                 </configuration>
             </plugin>
-
-            <!-- WAR plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
