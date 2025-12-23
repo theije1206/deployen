@@ -20,7 +20,7 @@ import defectPage from "@/pages/sanitair/defect.html?raw";
 import allNotificationsPage from "@/pages/sanitair/all-notifications.html?raw";
 import storagePage from "@/pages/sanitair/storage.html?raw";
 import elsePage from "@/pages/sanitair/else.html?raw";
-import reservationsPage from "@/bookings.html?raw";
+import reservationsPage from "/bookings.html?raw";
 import cateringPage from "@/pages/catering.html?raw";
 import cateringOrder from "@/pages/cat_orders.html?raw";
 import cateringBakery from "@/pages/cat_bakery.html?raw";
