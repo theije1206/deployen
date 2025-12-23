@@ -15,9 +15,6 @@ RUN mvn clean package -DskipTests
 # =========================
 FROM tomcat:10.1-jdk17
 
-# Verwijder standaard ROOT webapp
-RUN rm -rf /usr/local/tomcat/webapps/ROOT
-
 # Kopieer WAR als ROOT.war
 COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 
