@@ -5,49 +5,47 @@
     <title>Reservering Bevestigd</title>
 </head>
 <body>
-    <h1>Bedankt voor uw reservering!</h1>
-    
-    <p>Uw reserveringsnummer: <span id="res-id"></span></p>
-    <p>Aantal kano's: <span id="kano-count"></span></p>
-    <p>Datum: <span id="rental-date"></span></p>
-    <p>Tijd: <span id="rental-time"></span></p>
-    <p>Duur: <span id="rental-duration"></span></p>
-    <p>Naam: <span id="name"></span></p>
-    <p>Telefoon: <span id="phone"></span></p>
-    <p>Email: <span id="email"></span></p>
+<h1>Bedankt voor uw reservering!</h1>
 
-    <a href="/kanoverhuur">Terug naar home</a>
+<p>Uw reserveringsnummer: <span id="res-id"></span></p>
+<p>Aantal kano's: <span id="kano-count"></span></p>
+<p>Datum: <span id="rental-date"></span></p>
+<p>Tijd: <span id="rental-time"></span></p>
+<p>Duur: <span id="rental-duration"></span></p>
+<p>Naam: <span id="name"></span></p>
+<p>Telefoon: <span id="phone"></span></p>
+<p>Email: <span id="email"></span></p>
 
-    <script>
-        async function fetchReservationInfo() {
-            try {
-                const response = await fetch("/api/product-reservations");
-                if (!response.ok) throw new Error("Serverfout");
+<a href="/kanoverhuur.html">Terug naar home</a>
 
-                const reservations = await response.json();
+<script>
+    async function fetchReservationInfo() {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get("id");
+            if (!id) throw new Error("Geen reserverings-ID gevonden");
 
-                if (!reservations || reservations.length === 0) {
-                    document.getElementById("res-id").textContent = "Geen reserveringen gevonden.";
-                    return;
-                }
+            const response = await fetch(`/api/product-reservations/${id}`);
+            if (!response.ok) throw new Error("Serverfout");
 
-                const last = reservations[reservations.length - 1];
+            const reservation = await response.json();
 
-                document.getElementById("res-id").textContent = last.id;
-                document.getElementById("kano-count").textContent = last.kanoCount;
-                document.getElementById("rental-date").textContent = last.rentalDate;
-                document.getElementById("rental-time").textContent = last.rentalTime;
-                document.getElementById("rental-duration").textContent = last.rentalDuration;
-                document.getElementById("name").textContent = last.name;
-                document.getElementById("phone").textContent = last.contact;
-                document.getElementById("email").textContent = last.email;
+            document.getElementById("res-id").textContent = reservation.id;
+            document.getElementById("kano-count").textContent = reservation.kanoCount;
+            document.getElementById("rental-date").textContent = reservation.rentalDate;
+            document.getElementById("rental-time").textContent = reservation.rentalTime;
+            document.getElementById("rental-duration").textContent = reservation.rentalDuration;
+            document.getElementById("name").textContent = reservation.name;
+            document.getElementById("phone").textContent = reservation.phone;
+            document.getElementById("email").textContent = reservation.email;
 
-            } catch (error) {
-                console.error(error);
-            }
+        } catch (error) {
+            console.error(error);
+            document.body.insertAdjacentHTML('beforeend', `<p style="color:red;">${error.message}</p>`);
         }
+    }
 
-        fetchReservationInfo();
-    </script>
+    fetchReservationInfo();
+</script>
 </body>
 </html>
