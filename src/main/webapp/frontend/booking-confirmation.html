@@ -16,19 +16,22 @@
 <p>Telefoon: <span id="phone"></span></p>
 <p>Email: <span id="email"></span></p>
 
-<a href="/kanoverhuur.html">Terug naar home</a>
+<a href="/frontend/kanoverhuur.html">Terug naar home</a>
 
 <script>
     async function fetchReservationInfo() {
         try {
             const params = new URLSearchParams(window.location.search);
-            const id = params.get("id");
+            const id = Number(params.get("id"));
             if (!id) throw new Error("Geen reserverings-ID gevonden");
 
-            const response = await fetch(`/api/product-reservations/${id}`);
+            const response = await fetch("/api/product-reservations");
             if (!response.ok) throw new Error("Serverfout");
 
-            const reservation = await response.json();
+            const reservations = await response.json();
+            const reservation = reservations.find(r => r.id === id);
+
+            if (!reservation) throw new Error("Reservering niet gevonden");
 
             document.getElementById("res-id").textContent = reservation.id;
             document.getElementById("kano-count").textContent = reservation.kanoCount;

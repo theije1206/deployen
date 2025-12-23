@@ -120,9 +120,8 @@
 
             const savedReservation = await response.json();
 
-            // ✅ juiste redirect
             window.location.href =
-                `/booking-confirmation.html?id=${savedReservation.id}`;
+                `/frontend/booking-confirmation.html?id=${savedReservation.id}`;
 
         } catch (error) {
             console.error(error);
