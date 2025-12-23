@@ -1,22 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Kano Verhuur</title>
 </head>
 <body>
-    <div id="header">
-        <h1>Kano Verhuur</h1>
-    <p>Hier kunt u de beste kano's huren</p>
-    </div>
-    <form id="renting-list">
-    <label for="kano-type">Kies een kano type:</label>
-    <select id="kano-type" select="rental-option"></select>
 
-    <div id="kano-quantity">
+<header>
+    <h1>Kano Verhuur</h1>
+    <p>Hier kunt u de beste kano's huren</p>
+</header>
+
+<form id="renting-list">
+
+    <label for="kano-type">Kies een kano type:</label>
+    <select id="kano-type" required>
+        <option value="">-- Selecteer een kano --</option>
+    </select>
+
+    <div>
         <label for="kano-count">Aantal kano's:</label>
-        <select id="kano-count" name="kano-count">
+        <select id="kano-count">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -25,103 +30,110 @@
         </select>
     </div>
 
-    <div id="rental-calendar">
-<!--        <label for="rental-date">Selecteer datum:</label>-->
-        <input type="date" id="start" name="trip-start" value="2025-12-10" min="2025-01-01" max="2025-12-31"/>
-        <label for="rental-time">Selecteer tijd:</label>
-        <input type="time" id="rental-time" name="rental-time" value="10:00" min="09:00" max="18:00"/>
+    <div>
+        <label for="start">Datum:</label>
+        <input type="date" id="start" required />
+
+        <label for="rental-time">Tijd:</label>
+        <input type="time" id="rental-time" min="09:00" max="18:00" required />
     </div>
 
-    <div id="rental-information">
-        <div id="rental-duration">
-            <label for="duration-select">Duur van de huur:</label>
-            <select id="duration-select" name="duration-select">
-                <option value="1">1 uur</option>
-                <option value="2">2 uur</option>
-                <option value="3">3 uur</option>
-                <option value="4">4 uur</option>
-                <option value="5">5 uur</option>
-            </select>
-        </div>
-
-        <div id="personal-information">
-            <label for="name-info">Naam:</label>   
-            <input type="text" id="name-info" name="name-info" />
-            <label for="contact-info">Telefoonnummer:</label>
-            <input type="text" id="contact-info" name="contact-info" />
-            <label for="email-info">E-mail:</label>
-            <input type="text" id="email-info" name="email-info" />
-        </div>
-
-        <button type="submit" id="submit-rental">Verhuur aanvragen</button>
+    <div>
+        <label for="duration-select">Duur van de huur:</label>
+        <select id="duration-select">
+            <option value="1">1 uur</option>
+            <option value="2">2 uur</option>
+            <option value="3">3 uur</option>
+            <option value="4">4 uur</option>
+            <option value="5">5 uur</option>
+        </select>
     </div>
+
+    <fieldset>
+        <legend>Persoonlijke gegevens</legend>
+
+        <label for="name-info">Naam:</label>
+        <input type="text" id="name-info" required />
+
+        <label for="contact-info">Telefoonnummer:</label>
+        <input type="text" id="contact-info" required />
+
+        <label for="email-info">E-mail:</label>
+        <input type="email" id="email-info" required />
+    </fieldset>
+
+    <button type="submit">Verhuur aanvragen</button>
 </form>
 
-    <script>
-async function fetchProducts() {
-  try {
-    const response = await fetch("/api/products");
-    const products = await response.json();
-    return products;
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    return [];
-  }
-}
-
-async function loadKanoOptions() {
-  const products = await fetchProducts();
-  const kanoSelect = document.getElementById("kano-type");
-
-  products.forEach((product) => {
-    const option = document.createElement("option");
-    option.value = product.id;
-    option.textContent = `${product.naam} - €${product.prijs} - ${product.capaciteit} personen`;
-    kanoSelect.appendChild(option);
-  });
-}
-
-loadKanoOptions();
-
-async function submitRentingList(event) {
-  event.preventDefault();
-
-  const rentalData = {
-    productId: parseInt(document.getElementById("kano-type").value),
-    kanoCount: parseInt(document.getElementById("kano-count").value),
-    rentalDate: document.getElementById("start").value,
-    rentalTime: document.getElementById("rental-time").value,
-    rentalDuration: parseInt(document.getElementById("duration-select").value),
-    name: document.getElementById("name-info").value.trim(),
-    phone: document.getElementById("contact-info").value.trim(),
-    email: document.getElementById("email-info").value.trim(),
-  };
-
-  try {
-    const response = await fetch("/api/product-reservations", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(rentalData),
-    });
-
-    if (response.ok) {
-      const json = await response.json();
-      const reservationId = json.id;
-      window.location.href = `/booking-confirmation?id=${reservationId}`;
-    } else {
-      const errorText = await response.text();
-      console.error("Backend fout:", errorText);
-      alert("Fout bij het indienen van de kano verhuur. Controleer de invoer.");
+<script>
+    async function fetchProducts() {
+        try {
+            const response = await fetch("/api/products");
+            if (!response.ok) throw new Error("Producten niet beschikbaar");
+            return await response.json();
+        } catch (error) {
+            console.error(error);
+            return [];
+        }
     }
-  } catch (error) {
-    console.error(error);
-    alert("Fout bij het indienen van de kano verhuur.");
-  }
-}
-document
-  .getElementById("renting-list")
-  .addEventListener("submit", submitRentingList);
-    
-    </script>
+
+    async function loadKanoOptions() {
+        const products = await fetchProducts();
+        const select = document.getElementById("kano-type");
+
+        products.forEach(product => {
+            const option = document.createElement("option");
+            option.value = product.id;
+            option.textContent =
+                `${product.naam} - €${product.prijs} - ${product.capaciteit} personen`;
+            select.appendChild(option);
+        });
+    }
+
+    loadKanoOptions();
+
+    async function submitRentingList(event) {
+        event.preventDefault();
+
+        const rentalData = {
+            productId: Number(document.getElementById("kano-type").value),
+            kanoCount: Number(document.getElementById("kano-count").value),
+            rentalDate: document.getElementById("start").value,
+            rentalTime: document.getElementById("rental-time").value,
+            rentalDuration: Number(document.getElementById("duration-select").value),
+            name: document.getElementById("name-info").value.trim(),
+            phone: document.getElementById("contact-info").value.trim(),
+            email: document.getElementById("email-info").value.trim()
+        };
+
+        try {
+            const response = await fetch("/api/product-reservations", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(rentalData)
+            });
+
+            if (!response.ok) {
+                const text = await response.text();
+                throw new Error(text);
+            }
+
+            const savedReservation = await response.json();
+
+            // ✅ juiste redirect
+            window.location.href =
+                `/booking-confirmation.html?id=${savedReservation.id}`;
+
+        } catch (error) {
+            console.error(error);
+            alert("Fout bij het indienen van de reservering.");
+        }
+    }
+
+    document
+        .getElementById("renting-list")
+        .addEventListener("submit", submitRentingList);
+</script>
+
 </body>
 </html>
