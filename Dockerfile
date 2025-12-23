@@ -1,16 +1,25 @@
-# Frontend build
-FROM node:20 AS frontend-build
-WORKDIR /frontend
-COPY frontend/ .
-RUN npm install && npm run build
-
-# Backend build
-FROM maven:3.9.12-eclipse-temurin-17 AS backend-build
+############################
+# 1️⃣ Build WAR
+############################
+FROM maven:3.9.12-eclipse-temurin-17 AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src/ ./src
 
-# Kopieer frontend build output naar webapp
-COPY --from=frontend-build /frontend/build ./src/main/webapp
+COPY pom.xml .
+COPY src ./src
 
 RUN mvn clean package -DskipTests
+
+
+############################
+# 2️⃣ Tomcat runtime
+############################
+FROM tomcat:10.1-jdk17
+
+# Verwijder default apps
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+# Deploy WAR als ROOT
+COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
+
+EXPOSE 8080
+CMD ["catalina.sh", "run"]
