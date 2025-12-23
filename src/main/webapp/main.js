@@ -24,8 +24,8 @@ import reservationsPage from "/bookings.html?raw";
 import cateringPage from "@/pages/catering.html?raw";
 import cateringOrder from "@/pages/cat_orders.html?raw";
 import cateringBakery from "@/pages/cat_bakery.html?raw";
-import kanoverhuurPage from "@/kanoverhuur.html?raw";
-import bookingConfirmationPage from "@/booking-confirmation.html?raw";
+import kanoverhuurPage from "/kanoverhuur.html?raw";
+import bookingConfirmationPage from "/booking-confirmation.html?raw";
 
 /**
  * @type {Array<{path: string, document: string}>}
