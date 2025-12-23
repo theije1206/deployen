@@ -1,0 +1,21 @@
+package team.verzinwat.cms.services;
+
+import team.verzinwat.cms.domains.Page;
+import team.verzinwat.cms.domains.elements.SvgElement;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PageService {
+    private final List<Page> pages = new ArrayList<>();
+
+    public PageService() {
+        var icon = new SvgElement("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=\"none\"><path d=\"M7.99998 25.3334H12V18.6667C12 18.2889 12.128 17.9725 12.384 17.7174C12.64 17.4622 12.9564 17.3342 13.3333 17.3334H18.6666C19.0444 17.3334 19.3613 17.4614 19.6173 17.7174C19.8733 17.9734 20.0009 18.2898 20 18.6667V25.3334H24V13.3334L16 7.33335L7.99998 13.3334V25.3334ZM5.33331 25.3334V13.3334C5.33331 12.9111 5.42798 12.5111 5.61731 12.1334C5.80665 11.7556 6.06754 11.4445 6.39998 11.2L14.4 5.20002C14.8666 4.84446 15.4 4.66669 16 4.66669C16.6 4.66669 17.1333 4.84446 17.6 5.20002L25.6 11.2C25.9333 11.4445 26.1946 11.7556 26.384 12.1334C26.5733 12.5111 26.6675 12.9111 26.6666 13.3334V25.3334C26.6666 26.0667 26.4053 26.6947 25.8826 27.2174C25.36 27.74 24.7324 28.0009 24 28H18.6666C18.2889 28 17.9724 27.872 17.7173 27.616C17.4622 27.36 17.3342 27.0436 17.3333 26.6667V20H14.6666V26.6667C14.6666 27.0445 14.5386 27.3614 14.2826 27.6174C14.0266 27.8734 13.7102 28.0009 13.3333 28H7.99998C7.26665 28 6.63909 27.7391 6.11731 27.2174C5.59553 26.6956 5.3342 26.0676 5.33331 25.3334Z\" fill=\"currentColor\"/></svg>");
+        var temp = new Page("Home Pagina", true, icon);
+        pages.add(temp);
+    }
+
+    public List<Page> getPages() {
+        return pages;
+    }
+}

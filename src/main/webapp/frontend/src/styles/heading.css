@@ -1,0 +1,7 @@
+.page-title {
+    margin: 0;
+    grid-row: 4 / 10;
+    grid-column: 2 / 4;
+    text-align: center;
+    align-content: center;
+}
