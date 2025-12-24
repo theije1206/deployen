@@ -16,7 +16,7 @@ public class ReservationConnection {
                 throw new RuntimeException("PostgreSQL Driver niet gevonden", e);
             }
 
-            String url = "jdbc:" + System.getenv("DATABASE_URL");
+            String url = System.getenv("DATABASE_URL");
             String user = System.getenv("POSTGRES_USER");
             String pass = System.getenv("POSTGRES_PASSWORD");
 
