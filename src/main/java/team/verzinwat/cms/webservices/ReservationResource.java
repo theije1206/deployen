@@ -12,7 +12,6 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 
@@ -21,30 +20,32 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ReservationResource {
 
-    private static ReservationService service;
+    private ReservationService service;
 
-    static {
-        try {
-            Connection conn = ReservationConnection.getConnection();
-            ReservationDAO dao = new ReservationDaoPostgres(conn);
-            service = new ReservationService(dao);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Cannot connect to database", e);
+    private ReservationService getService() {
+        if (service == null) {
+            try {
+                Connection conn = ReservationConnection.getConnection();
+                ReservationDAO dao = new ReservationDaoPostgres(conn);
+                service = new ReservationService(dao);
+            } catch (Exception e) {
+                throw new WebApplicationException("Database fout", 500);
+            }
         }
+        return service;
     }
-
 
     @GET
     public List<Reservation> getAll(@Context SecurityContext sc) {
         checkAccess(sc);
-        return service.getAllReservations();
+        return getService().getAllReservations();
     }
 
     @POST
-    public Reservation addReservation(Reservation reservation, @Context SecurityContext sc) {
+    public Reservation addReservation(Reservation reservation,
+                                      @Context SecurityContext sc) {
         checkAccess(sc);
-        return service.addReservation(
+        return getService().addReservation(
                 reservation.getNaam(),
                 reservation.getAankomst(),
                 reservation.getVertrek(),
@@ -56,9 +57,11 @@ public class ReservationResource {
 
     @PUT
     @Path("/{id}")
-    public Reservation updateReservation(@PathParam("id") int id, Reservation updated, @Context SecurityContext sc) {
+    public Reservation updateReservation(@PathParam("id") int id,
+                                         Reservation updated,
+                                         @Context SecurityContext sc) {
         checkAccess(sc);
-        return service.updateReservation(
+        return getService().updateReservation(
                 id,
                 updated.getNaam(),
                 updated.getAankomst(),
@@ -71,9 +74,10 @@ public class ReservationResource {
 
     @DELETE
     @Path("/{id}")
-    public void deleteReservation(@PathParam("id") int id, @Context SecurityContext sc) {
+    public void deleteReservation(@PathParam("id") int id,
+                                  @Context SecurityContext sc) {
         checkAccess(sc);
-        boolean removed = service.deleteReservation(id);
+        boolean removed = getService().deleteReservation(id);
         if (!removed) {
             throw new WebApplicationException("Reservering niet gevonden", 404);
         }

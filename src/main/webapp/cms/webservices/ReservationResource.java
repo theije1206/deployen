@@ -21,25 +21,27 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ReservationResource {
 
-    private static ReservationService service;
+    private ReservationService service;
 
-    static {
-        try {
-            Connection conn = ReservationConnection.getConnection();
-            ReservationDAO dao = new ReservationDaoPostgres(conn);
-            service = new ReservationService(dao);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Cannot connect to database", e);
+    private ReservationService getService() {
+        if (service == null) {
+            try {
+                Connection conn = ReservationConnection.getConnection();
+                ReservationDAO dao = new ReservationDaoPostgres(conn);
+                service = new ReservationService(dao);
+            } catch (Exception e) {
+                throw new WebApplicationException("Database fout", 500);
+            }
         }
+        return service;
     }
-
 
     @GET
     public List<Reservation> getAll(@Context SecurityContext sc) {
         checkAccess(sc);
-        return service.getAllReservations();
+        return getService().getAllReservations();
     }
+}
 
     @POST
     public Reservation addReservation(Reservation reservation, @Context SecurityContext sc) {
