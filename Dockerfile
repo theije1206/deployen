@@ -9,7 +9,6 @@ COPY src ./src
 
 RUN mvn clean package -DskipTests
 
-
 ############################
 # 2️⃣ Tomcat runtime
 ############################
@@ -20,6 +19,11 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Deploy WAR als ROOT
 COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
+
+# Zet de env-vars door (worden door Railway ingesteld)
+ENV DB_URL=""
+ENV DB_USER=""
+ENV DB_PASS=""
 
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
