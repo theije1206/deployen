@@ -21,12 +21,10 @@ public class Main {
 //    }
 
     public static void main(String[] args) {
-        try{
+        try {
             UserDAO userDAO = new UserDaoPostgres(ReservationConnection.getConnection());
             userDAO.findAll().forEach(System.out::println);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
