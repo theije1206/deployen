@@ -3,6 +3,7 @@ package data;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ReservationConnection {
 
@@ -16,16 +17,28 @@ public class ReservationConnection {
                 throw new RuntimeException("PostgreSQL Driver niet gevonden", e);
             }
 
-            String url = System.getenv("DATABASE_URL");
-            String user = System.getenv("POSTGRES_USER");
-            String pass = System.getenv("POSTGRES_PASSWORD");
+            String host = System.getenv("DATABASE_HOST");
+            String port = System.getenv("DATABASE_PORT");
+            String dbName = System.getenv("DATABASE_NAME");
+            String user = System.getenv("DATABASE_USER");
+            String pass = System.getenv("DATABASE_PASSWORD");
 
-            if (url == null || user == null || pass == null) {
-                throw new RuntimeException("Database connectie info ontbreekt. Controleer DB_URL, DB_USER en DB_PASS.");
+            if (host == null || port == null || dbName == null || user == null || pass == null) {
+                throw new RuntimeException(
+                        "Database connectie info ontbreekt. Controleer DATABASE_HOST, DATABASE_PORT, DATABASE_NAME, DATABASE_USER en DATABASE_PASSWORD."
+                );
             }
 
-            System.out.println("Connecting to DB: " + url);
-            connection = DriverManager.getConnection(url, user, pass);
+            pass = pass.trim().replace("\n", "").replace("\r", "");
+
+            String jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", host, port, dbName);
+
+            Properties props = new Properties();
+            props.setProperty("user", user);
+            props.setProperty("password", pass);
+
+            System.out.println("Connecting to DB: " + jdbcUrl);
+            connection = DriverManager.getConnection(jdbcUrl, props);
         }
 
         return connection;
