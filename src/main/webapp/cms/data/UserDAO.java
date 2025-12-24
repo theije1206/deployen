@@ -1,6 +1,6 @@
-package team.verzinwat.cms.data;
+package data;
 
-import team.verzinwat.cms.domain.User;
+import domain.User;
 
 import java.sql.SQLException;
 import java.util.List;

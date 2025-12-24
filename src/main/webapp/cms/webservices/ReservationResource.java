@@ -1,51 +1,42 @@
-package team.verzinwat.cms.webservices;
+package webservices;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import team.verzinwat.cms.domain.Reservation;
-import team.verzinwat.cms.services.ReservationService;
-import team.verzinwat.cms.data.ReservationConnection;
-import team.verzinwat.cms.data.ReservationDAO;
-import team.verzinwat.cms.data.ReservationDaoPostgres;
 
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.SecurityContext;
+import domain.Reservation;
+import services.ReservationService;
+import data.ReservationDAO;
+import data.ReservationDaoPostgres;
+import data.ReservationConnection;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
-
 
 @Path("/reservations")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+
 public class ReservationResource {
 
     private ReservationService service;
 
-    private ReservationService getService() {
-        if (service == null) {
-            try {
-                Connection conn = ReservationConnection.getConnection();
-                ReservationDAO dao = new ReservationDaoPostgres(conn);
-                service = new ReservationService(dao);
-            } catch (Exception e) {
-                throw new WebApplicationException("Database fout", 500);
-            }
+    public ReservationResource() {
+        try {
+            Connection conn = ReservationConnection.getConnection();
+            ReservationDAO dao = new ReservationDaoPostgres(conn);
+            this.service = new ReservationService(dao);
+        } catch (Exception e) {
+            throw new RuntimeException("Database connectie mislukt", e);
         }
-        return service;
     }
 
     @GET
-    public List<Reservation> getAll(@Context SecurityContext sc) {
-        checkAccess(sc);
-        return getService().getAllReservations();
+    public List<Reservation> getAll() {
+        return service.getAllReservations();
     }
-}
 
     @POST
-    public Reservation addReservation(Reservation reservation, @Context SecurityContext sc) {
-        checkAccess(sc);
+    public Reservation addReservation(Reservation reservation) {
         return service.addReservation(
                 reservation.getNaam(),
                 reservation.getAankomst(),
@@ -58,8 +49,8 @@ public class ReservationResource {
 
     @PUT
     @Path("/{id}")
-    public Reservation updateReservation(@PathParam("id") int id, Reservation updated, @Context SecurityContext sc) {
-        checkAccess(sc);
+    public Reservation updateReservation(@PathParam("id") int id,
+                                         Reservation updated) {
         return service.updateReservation(
                 id,
                 updated.getNaam(),
@@ -73,20 +64,10 @@ public class ReservationResource {
 
     @DELETE
     @Path("/{id}")
-    public void deleteReservation(@PathParam("id") int id, @Context SecurityContext sc) {
-        checkAccess(sc);
+    public void deleteReservation(@PathParam("id") int id) {
         boolean removed = service.deleteReservation(id);
         if (!removed) {
             throw new WebApplicationException("Reservering niet gevonden", 404);
-        }
-    }
-
-    private void checkAccess(SecurityContext sc) {
-        if (sc.getUserPrincipal() == null) {
-            throw new WebApplicationException("Niet ingelogd", 401);
-        }
-        if (!sc.isUserInRole("campingowner")) {
-            throw new WebApplicationException("Geen toegang", 403);
         }
     }
 }

@@ -1,12 +1,12 @@
-package team.verzinwat.cms.webservices;
+package webservices;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import team.verzinwat.cms.services.RentingService;
-import team.verzinwat.cms.domain.Product;
+import services.RentingService;
+import domain.Product;
 
 import java.util.List;
 

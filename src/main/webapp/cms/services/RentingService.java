@@ -1,6 +1,6 @@
-package team.verzinwat.cms.services;
+package services;
 
-import team.verzinwat.cms.domain.Product;
+import domain.Product;
 
 import java.util.ArrayList;
 import java.util.List;

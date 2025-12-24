@@ -1,7 +1,7 @@
-package team.verzinwat.cms.data;
+package data;
 
-import team.verzinwat.cms.domain.Reservation;
-import team.verzinwat.cms.domain.User;
+import domain.Reservation;
+import domain.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

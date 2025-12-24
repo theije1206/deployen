@@ -1,6 +1,6 @@
-package team.verzinwat.cms.data;
+package data;
 
-import team.verzinwat.cms.domain.Reservation;
+import domain.Reservation;
 import java.sql.SQLException;
 import java.util.List;
 

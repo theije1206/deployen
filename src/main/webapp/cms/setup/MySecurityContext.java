@@ -1,7 +1,7 @@
-package team.verzinwat.cms.setup;
+package setup;
 
 import jakarta.ws.rs.core.SecurityContext;
-import team.verzinwat.cms.domain.User;
+import domain.User;
 
 import java.security.Principal;
 

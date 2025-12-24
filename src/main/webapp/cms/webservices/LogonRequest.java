@@ -1,4 +1,4 @@
-package team.verzinwat.cms.webservices;
+package webservices;
 
 public record LogonRequest(String username, String password) {
     public LogonRequest {

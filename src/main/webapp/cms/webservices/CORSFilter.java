@@ -1,4 +1,4 @@
-package team.verzinwat.cms.webservices;
+package webservices;
 
 import jakarta.ws.rs.container.*;
 import jakarta.ws.rs.ext.Provider;

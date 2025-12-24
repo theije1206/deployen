@@ -1,7 +1,7 @@
-package team.verzinwat.cms.services;
+package services;
 
-import team.verzinwat.cms.domain.Reservation;
-import team.verzinwat.cms.data.ReservationDAO;
+import domain.Reservation;
+import data.ReservationDAO;
 
 import java.sql.SQLException;
 import java.time.LocalDate;

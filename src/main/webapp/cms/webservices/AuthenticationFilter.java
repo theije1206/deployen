@@ -1,4 +1,4 @@
-package team.verzinwat.cms.webservices;
+package webservices;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -12,8 +12,8 @@ import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.ext.Provider;
 
-import team.verzinwat.cms.services.UserService;
-import team.verzinwat.cms.setup.MySecurityContext;
+import services.UserService;
+import setup.MySecurityContext;
 
 @Provider
 @Priority(Priorities.AUTHENTICATION)

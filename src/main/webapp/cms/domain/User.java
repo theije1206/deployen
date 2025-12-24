@@ -1,4 +1,4 @@
-package team.verzinwat.cms.domain;
+package domain;
 
 import java.security.Principal;
 

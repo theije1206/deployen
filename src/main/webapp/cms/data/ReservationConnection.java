@@ -1,4 +1,4 @@
-package team.verzinwat.cms.data;
+package data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

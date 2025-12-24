@@ -1,11 +1,11 @@
-package team.verzinwat.cms.webservices;
+package webservices;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.JwtException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import team.verzinwat.cms.services.UserService;
+import services.UserService;
 
 import javax.crypto.SecretKey;
 import java.util.Calendar;

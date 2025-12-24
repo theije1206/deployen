@@ -1,4 +1,4 @@
-package team.verzinwat.cms.domain;
+package domain;
 
 public class Product {
     private int id;

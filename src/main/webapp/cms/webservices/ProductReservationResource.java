@@ -1,4 +1,4 @@
-package team.verzinwat.cms.webservices;
+package webservices;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -8,8 +8,8 @@ import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import java.util.Set;
 import jakarta.validation.ConstraintViolation;
-import team.verzinwat.cms.domain.ProductReservation;
-import team.verzinwat.cms.services.ProductReservationService;
+import domain.ProductReservation;
+import services.ProductReservationService;
 
 import java.util.List;
 

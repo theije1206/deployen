@@ -1,4 +1,4 @@
-package team.verzinwat.cms.domain;
+package domain;
 
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
