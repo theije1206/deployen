@@ -21,14 +21,13 @@ public class ReservationConnection {
             String pass = System.getenv("DB_PASS");
 
             if (url == null || user == null || pass == null) {
-                throw new RuntimeException(
-                        "Geen database configuratie gevonden. Zorg dat DB_URL, DB_USER en DB_PASS zijn ingesteld."
-                );
+                throw new RuntimeException("Database connectie info ontbreekt. Controleer DB_URL, DB_USER en DB_PASS.");
             }
 
             System.out.println("Connecting to DB: " + url);
             connection = DriverManager.getConnection(url, user, pass);
         }
+
         return connection;
     }
 
