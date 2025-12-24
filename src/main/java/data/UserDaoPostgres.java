@@ -1,6 +1,5 @@
 package data;
 
-import domain.Reservation;
 import domain.User;
 
 import java.sql.Connection;
@@ -10,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoPostgres implements UserDAO{
+public class UserDaoPostgres implements UserDAO {
 
     // Container for the connection
     private Connection connection = null;
